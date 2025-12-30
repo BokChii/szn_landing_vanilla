@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>성좌넷 - 웹툰 퀴즈 리워드 플랫폼</title>
+    <link rel="icon" type="image/png" href="assets/logo.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript">
+      // Unicorn Studio Script
+      !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.5.3/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header id="header" class="header">
+            <div class="header-content">
+                <div class="logo-container" onclick="scrollToSection('hero')">
+                    <img src="assets/logo.png" alt="성좌넷 로고" class="logo-img" />
+                    <h1 class="logo-text">성좌넷</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-download hidden-sm">앱 다운로드</button>
+                    <button class="btn-menu" id="menuToggle" onclick="toggleMenu()">
+                        <svg id="menuIcon" class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                        <svg id="closeIcon" class="icon-close hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div id="menuDropdown" class="menu-dropdown hidden">
+                        <div class="menu-overlay" onclick="toggleMenu()"></div>
+                        <div class="menu-content">
+                            <button class="menu-item" onclick="scrollToSection('hero')">홈</button>
+                            <button class="menu-item" onclick="scrollToSection('problem')">문제점</button>
+                            <button class="menu-item" onclick="scrollToSection('solution')">솔루션</button>
+                            <button class="menu-item" onclick="scrollToSection('features')">주요 기능</button>
+                            <button class="menu-item" onclick="scrollToSection('flow')">사용법</button>
+                            <button class="menu-item" onclick="scrollToSection('reviews')">후기</button>
+                            <button class="menu-item" onclick="scrollToSection('cta')">시작하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- 1) HERO (Cut 1) -->
+            <section id="hero" class="hero-section">
+                <div class="hero-background">
+                    <div class="unicorn-wrapper">
+                        <div data-us-project="LhQfBcRG8b16tRILfPX6" style="width: 100%; height: 100%; min-height: 100%;"></div>
+                    </div>
+                </div>
+                <div class="hero-content">
+                    <div class="hero-top">
+                        <div class="hero-logo-wrapper">
+                            <img src="assets/logo.png" alt="성좌넷 로고" class="hero-logo" />
+                        </div>
+                        <div class="hero-badge">매일 업데이트 · 랭킹 리워드 · 30초 컷</div>
+                        <h1 class="hero-title">
+                            퀴즈로 즐기고,<br />
+                            <span class="hero-title-gradient">리워드로 남기는</span><br />
+                            웹툰 팬덤 경험
+                        </h1>
+                    </div>
+                    <div class="hero-spacer"></div>
+                    <div class="hero-bottom">
+                        <p class="hero-description">
+                            오늘의 웹툰 퀴즈 1~2개.<br />
+                            딱 그만큼만 가볍게.
+                        </p>
+                        <button class="btn-hero">
+                            <span>오늘의 퀴즈 풀러가기</span>
+                            <svg class="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                        <div class="hero-scroll-indicator">
+                            <svg class="icon-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <polyline points="19 12 12 19 5 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2) Problem Empathy (Cut 2) -->
+            <section id="problem" class="section">
+                <div class="speech-bubble-container speech-left">
+                    <div class="speech-bubble">
+                        <div class="speech-shadow"></div>
+                        <div class="speech-content">"잠깐만… 이거 나도 맞힐 수 있겠는데?"</div>
+                        <div class="speech-tail speech-tail-left"></div>
+                    </div>
+                </div>
+
+                <div class="webtoon-panel">
+                    <div class="cut-badge">CUT #02</div>
+                    <div class="panel-content">
+                        <h2 class="problem-title">
+                            웹툰은 매일 보는데,<br />
+                            <span class="problem-highlight">
+                                <span class="highlight-text">더 즐길 수 있는 방법은 </span>
+                                <span class="highlight-bg"></span>
+                            </span>없지?
+                        </h2>
+                        
+                        <div class="problem-list">
+                            <div class="problem-item problem-item-1">
+                                <div class="problem-icon">✕</div>
+                                <span class="problem-text">댓글은 타이밍 놓치면 끝</span>
+                            </div>
+                            <div class="problem-item problem-item-2">
+                                <div class="problem-icon">✕</div>
+                                <span class="problem-text">굿즈 이벤트는 경쟁률 헬</span>
+                            </div>
+                            <div class="problem-item problem-item-3">
+                                <div class="problem-icon">✕</div>
+                                <span class="problem-text">내 덕질을 기록할 곳이 없음</span>
+                            </div>
+                        </div>
+
+                        <div class="problem-solution">
+                            <p class="solution-text">
+                                성좌넷은<br/>팬덤을 <span class="solution-highlight">'게임처럼'</span> 만듭니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Marquee Section -->
+            <div class="marquee marquee-left">
+                <div class="marquee-content">
+                    <span>WEBTOON QUIZ REWARD · DAILY UPDATE · RANKING BATTLE · </span>
+                    <span>WEBTOON QUIZ REWARD · DAILY UPDATE · RANKING BATTLE · </span>
+                </div>
+            </div>
+
+            <!-- 3) Solution (Cut 3) -->
+            <section id="solution" class="section">
+                <div class="webtoon-panel panel-solution">
+                    <div class="cut-badge">CUT #03</div>
+                    <div class="panel-content solution-content">
+                        <div class="solution-decoration solution-star">
+                            <svg class="icon-star" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </div>
+                        <div class="solution-decoration solution-award">
+                            <svg class="icon-award" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="8" r="7"></circle>
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                            </svg>
+                        </div>
+                        <h2 class="solution-title">
+                            매일 퀴즈 한 컷,<br/>리워드 한 컷
+                        </h2>
+                        <p class="solution-description">
+                            스크롤 한 번이면<br/>
+                            <span class="solution-underline">오늘의 팬활동 완료.</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="marquee marquee-right marquee-yellow">
+                <div class="marquee-content">
+                    <span>10 SECONDS CUT · JUST SCROLL · GET REWARD · </span>
+                    <span>10 SECONDS CUT · JUST SCROLL · GET REWARD · </span>
+                </div>
+            </div>
+
+            <!-- 4-6) Core Features (Cut 4-6) -->
+            <section id="features" class="section">
+                <!-- Feature 1 -->
+                <div class="speech-bubble-container speech-right">
+                    <div class="speech-bubble">
+                        <div class="speech-shadow"></div>
+                        <div class="speech-content">"한 문제만 풀려고 했는데…"</div>
+                        <div class="speech-tail speech-tail-right"></div>
+                    </div>
+                </div>
+                
+                <div class="webtoon-panel">
+                    <div class="cut-badge">CUT #04</div>
+                    <div class="panel-content feature-content">
+                        <div class="feature-badge feature-badge-right">Feature 01</div>
+                        <div class="phone-mockup phone-rotate-left">
+                            <div class="phone-frame">
+                                <div class="phone-power-btn"></div>
+                                <div class="phone-volume-btn phone-volume-top"></div>
+                                <div class="phone-volume-btn phone-volume-bottom"></div>
+                                <div class="phone-screen">
+                                    <div class="phone-notch"></div>
+                                    <img src="assets/quiz.png" alt="Quiz Screen" class="phone-image" />
+                                    <div class="phone-gloss"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-text">
+                            <h3 class="feature-title">
+                                <span class="feature-icon-text">
+                                    <svg class="icon-zap" viewBox="0 0 24 24" fill="currentColor">
+                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                    </svg>
+                                    FAST
+                                </span>
+                                오늘의 퀴즈는 "짧게"
+                            </h3>
+                            <p class="feature-description">
+                                많아야 1~2개,<br/>부담 없이, 매일 30초 컷.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="webtoon-panel">
+                    <div class="cut-badge">CUT #05</div>
+                    <div class="panel-content feature-content">
+                        <div class="feature-badge feature-badge-left">Feature 02</div>
+                        <div class="phone-mockup phone-rotate-right">
+                            <div class="phone-frame">
+                                <div class="phone-power-btn"></div>
+                                <div class="phone-volume-btn phone-volume-top"></div>
+                                <div class="phone-volume-btn phone-volume-bottom"></div>
+                                <div class="phone-screen">
+                                    <div class="phone-notch"></div>
+                                    <img src="assets/shop.png" alt="Shop Screen" class="phone-image" />
+                                    <div class="phone-gloss"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-text">
+                            <h3 class="feature-title">
+                                <span class="feature-icon-text">
+                                    <svg class="icon-award" viewBox="0 0 24 24" fill="currentColor">
+                                        <circle cx="12" cy="8" r="7"></circle>
+                                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                                    </svg>
+                                    REWARD
+                                </span>
+                                퀴즈 풀면 바로 "적립"
+                            </h3>
+                            <p class="feature-description">
+                                맞히면 포인트가 바로 적립.<br/>쌓인 포인트로 원하는 보상 획득.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="speech-bubble-container speech-center">
+                    <div class="speech-bubble">
+                        <div class="speech-shadow"></div>
+                        <div class="speech-content">"오늘 랭킹 1등, 내 거다."</div>
+                        <div class="speech-tail speech-tail-center"></div>
+                    </div>
+                </div>
+                <div class="webtoon-panel">
+                    <div class="cut-badge">CUT #06</div>
+                    <div class="panel-content feature-content">
+                        <div class="feature-badge feature-badge-right feature-badge-03">Feature 03</div>
+                        <div class="phone-mockup phone-rotate-left-small">
+                            <div class="phone-frame">
+                                <div class="phone-power-btn"></div>
+                                <div class="phone-volume-btn phone-volume-top"></div>
+                                <div class="phone-volume-btn phone-volume-bottom"></div>
+                                <div class="phone-screen">
+                                    <div class="phone-notch"></div>
+                                    <img src="assets/rank.png" alt="Ranking Screen" class="phone-image" />
+                                    <div class="phone-gloss"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-text">
+                            <h3 class="feature-title">
+                                <span class="feature-icon-text">
+                                    <svg class="icon-trophy" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                                        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                                        <path d="M4 22h16"></path>
+                                        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                                        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                                        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                                    </svg>
+                                    RANKING
+                                </span>
+                                랭킹으로 "한 번 더"
+                            </h3>
+                            <p class="feature-description">
+                                개인 랭킹부터 팀 랭킹까지.<br/>상위권일수록 보상이 커집니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7) Flow (Cut 7) -->
+            <section id="flow" class="section">
+                <div class="webtoon-panel panel-flow">
+                    <div class="cut-badge">CUT #07</div>
+                    <div class="panel-content flow-content">
+                        <h2 class="flow-title">사용법은 진짜 간단해요!</h2>
+                        
+                        <div class="flow-steps">
+                            <div class="flow-line"></div>
+                            <div class="flow-step">
+                                <div class="flow-number">1</div>
+                                <div class="flow-text">오늘의 퀴즈를 연다</div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-number">2</div>
+                                <div class="flow-text">30초 안에 푼다</div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-number">3</div>
+                                <div class="flow-text">랭킹/리워드를 확인한다</div>
+                            </div>
+                        </div>
+
+                        <div class="flow-note">
+                            <p>"웹툰 보다가 쉬는 시간에 딱."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8) Social Proof (Cut 8) -->
+            <section id="reviews" class="section">
+                <div class="webtoon-panel panel-reviews">
+                    <div class="cut-badge">CUT #08</div>
+                    <div class="panel-content reviews-content">
+                        <h2 class="reviews-title">
+                            오늘도 누군가는<br/>
+                            <span class="reviews-highlight">30초로 이겼다!</span>
+                        </h2>
+                        <div class="reviews-grid">
+                            <div class="review-card review-card-1">
+                                <div class="review-header">
+                                    <div class="review-avatar">U1</div>
+                                    <span class="review-user">User101</span>
+                                </div>
+                                <p class="review-text">"출근길에 한 문제 풀고 리워드 쌓이는 게 재밌음"</p>
+                            </div>
+                            <div class="review-card review-card-2">
+                                <div class="review-header">
+                                    <div class="review-avatar">U2</div>
+                                    <span class="review-user">User202</span>
+                                </div>
+                                <p class="review-text">"덕질이 습관이 됨 ㅋㅋ"</p>
+                            </div>
+                            <div class="review-card review-card-3">
+                                <div class="review-header">
+                                    <div class="review-avatar">U3</div>
+                                    <span class="review-user">User303</span>
+                                </div>
+                                <p class="review-text">"친구랑 랭킹 경쟁하는 게 은근 중독"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9) CTA (Cut 9) -->
+            <section id="cta" class="section">
+                <div class="webtoon-panel panel-cta">
+                    <div class="cut-badge">CUT #09</div>
+                    <div class="panel-content cta-content">
+                        <h2 class="cta-title">
+                            오늘의 퀴즈,<br/>지금 시작
+                        </h2>
+                        <p class="cta-description">
+                            성좌넷은 '웹툰을 보는 손가락' 그대로<br/>팬덤을 이어갑니다!
+                        </p>
+
+                        <div class="cta-mockup">
+                            <div class="phone-mockup">
+                                <div class="phone-frame">
+                                    <div class="phone-power-btn"></div>
+                                    <div class="phone-volume-btn phone-volume-top"></div>
+                                    <div class="phone-volume-btn phone-volume-bottom"></div>
+                                    <div class="phone-screen">
+                                        <div class="phone-notch"></div>
+                                        <img src="assets/main.png" alt="Main Screen" class="phone-image" />
+                                        <div class="phone-gloss"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cta-buttons">
+                            <button class="btn-cta">
+                                <svg class="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                <span>App Store</span>
+                            </button>
+                            <button class="btn-cta">
+                                <svg class="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                <span>Google Play</span>
+                            </button>
+                        </div>
+                        
+                        <div class="cta-link">
+                            <p class="cta-or">OR</p>
+                            <a href="https://sungzwa.net/home" target="_blank" rel="noopener noreferrer" class="cta-web-link">
+                                설치 없이 웹에서 둘러보기
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 10) Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <img src="assets/logo.png" alt="성좌넷 로고" class="footer-logo-img" />
+                        <h2 class="footer-title">성좌넷</h2>
+                    </div>
+                    <p class="footer-description">
+                        성좌넷은 웹툰 팬덤을 위한 퀴즈 리워드 플랫폼입니다. 매일 새로운 퀴즈로 웹툰 지식을 뽐내고, 포인트를 쌓아 특별한 보상을 받으세요.
+                    </p>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">고객지원/문의</a>
+                        <a href="#" class="footer-link">이용약관</a>
+                        <a href="#" class="footer-link">개인정보처리방침</a>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/sungzwanet/" target="_blank" rel="noopener noreferrer" class="social-icon">
+                            <svg class="icon-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg class="icon-twitter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="mailto:szn.helpdesk@gmail.com" class="social-icon">
+                            <svg class="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="footer-divider"></div>
+                    <p class="footer-copyright">
+                        © 2025 성좌넷. 팬심을 기록하는 가장 가벼운 방법.
+                    </p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+
