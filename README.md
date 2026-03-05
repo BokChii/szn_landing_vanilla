@@ -1,4 +1,4 @@
-# 성좌넷 랜딩 페이지 - 순수 HTML/CSS/JavaScript 버전
+# 스토릿 랜딩 페이지 - 순수 HTML/CSS/JavaScript 버전
 
 이 폴더는 React 없이 순수 HTML, CSS, JavaScript로 구현된 랜딩 페이지입니다.
 
