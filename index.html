@@ -22,7 +22,7 @@
                     <h1 class="logo-text">스토릿</h1>
                 </div>
                 <div class="header-actions">
-                    <button type="button" class="btn-download hidden-sm" onclick="scrollToSection('preorder')">사전 예약</button>
+                    <button type="button" class="btn-download btn-download--accent hidden-sm" onclick="scrollToSection('preorder')">출시 알림 받기</button>
                     <button class="btn-menu" id="menuToggle" onclick="toggleMenu()">
                         <svg id="menuIcon" class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -44,7 +44,7 @@
                             <button class="menu-item" onclick="scrollToSection('features')">주요 기능</button>
                             <button class="menu-item" onclick="scrollToSection('flow')">사용법</button>
                             <button class="menu-item" onclick="scrollToSection('reviews')">후기</button>
-                            <button class="menu-item" onclick="scrollToSection('preorder')">사전 예약</button>
+                            <button class="menu-item" onclick="scrollToSection('preorder')">출시 알림 받기</button>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                             재미있게 풀고, 리워드도 받고!
                         </p>
                         <button class="btn-hero">
-                            <span>사전 예약하고 알림 받기</span>
+                            <span>정식 출시, 가장 먼저 알림 받기</span>
                             <svg class="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -379,10 +379,10 @@
                     <div class="cut-badge">CUT #09</div>
                     <div class="panel-content cta-content">
                         <h2 class="cta-title">
-                            사전 예약하고<br/>출시 알림 받기
+                            정식 출시 전,<br/>가장 먼저 알림 받기
                         </h2>
                         <p class="cta-description">
-                            이메일만 남겨 주시면 정식 출시 소식을<br/>가장 먼저 보내드릴게요!
+                            스팸 없이, 출시일·오픈 소식만<br/><strong class="cta-description-strong">이메일 한 줄로</strong> 전해드릴게요.
                         </p>
 
                         <div class="cta-mockup">
@@ -400,17 +400,26 @@
                             </div>
                         </div>
 
-                        <div id="preorder" class="preorder-block">
+                        <div id="preorder" class="preorder-block preorder-card">
+                            <div class="preorder-card-header">
+                                <span class="preorder-badge">출시 알림</span>
+                                <h3 class="preorder-card-title">이메일만 남기면 끝이에요</h3>
+                                <p class="preorder-card-lead">자주 쓰는 주소를 적어 주세요. 오픈 소식만 보내드릴게요.</p>
+                            </div>
                             <form class="preorder-form" id="preorderForm" novalidate>
-                                <label for="preorder-email" class="preorder-label">이메일</label>
-                                <input type="email" id="preorder-email" name="email" class="preorder-input" placeholder="example@email.com" autocomplete="email" inputmode="email" aria-describedby="preorder-email-error" />
+                                <label for="preorder-email" class="preorder-label">알림 받을 이메일</label>
+                                <input type="email" id="preorder-email" name="email" class="preorder-input" placeholder="가장 자주 쓰는 이메일을 입력해 주세요" autocomplete="email" inputmode="email" aria-describedby="preorder-email-error preorder-trust" />
                                 <p id="preorder-email-error" class="preorder-error" role="alert" aria-live="polite" hidden></p>
-                                <button type="button" class="btn-preorder" id="preorderSubmit">사전 예약하기</button>
+                                <button type="button" class="btn-preorder" id="preorderSubmit">
+                                    <span class="btn-preorder-label">출시 알림 받기</span>
+                                    <span class="btn-preorder-loading" hidden aria-hidden="true">등록 중…</span>
+                                </button>
                             </form>
-                            <p class="preorder-hint">입력하신 주소로만 출시 알림을 보내드려요. 언제든 수신 거부할 수 있어요.</p>
+                            <p class="preorder-hint">개인정보는 출시 알림 목적으로만 사용되며, 언제든 수신 거부할 수 있어요.</p>
+                            <p id="preorder-trust" class="preorder-trust">스팸 메일은 보내지 않아요.</p>
                         </div>
                         
-                        <p class="store-coming-soon">App Store · Google Play 다운로드는 정식 출시 후 활성화됩니다.</p>
+                        <p class="store-coming-soon">모바일 앱은 정식 오픈과 함께 App Store · Google Play에서 만나요.</p>
                         <div class="cta-buttons cta-buttons--disabled">
                             <button type="button" class="btn-cta btn-cta--disabled" disabled aria-disabled="true" title="정식 출시 후 이용 가능">
                                 <svg class="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -484,18 +493,18 @@
         </main>
     </div>
 
-    <dialog id="modal-preorder-confirm" class="modal" aria-labelledby="modal-preorder-confirm-title">
+    <dialog id="modal-preorder-confirm" class="modal modal--preorder" aria-labelledby="modal-preorder-confirm-title">
         <div class="modal-inner">
-            <h2 id="modal-preorder-confirm-title" class="modal-title">사전 예약 확인</h2>
+            <h2 id="modal-preorder-confirm-title" class="modal-title">이 주소로 알림을 보내드릴까요?</h2>
             <p class="modal-text" id="modal-preorder-confirm-body"></p>
             <div class="modal-actions">
-                <button type="button" class="btn-modal btn-modal-secondary" id="modalPreorderCancel">취소</button>
-                <button type="button" class="btn-modal btn-modal-primary" id="modalPreorderConfirm">확인</button>
+                <button type="button" class="btn-modal btn-modal-secondary" id="modalPreorderCancel">다시 입력</button>
+                <button type="button" class="btn-modal btn-modal-primary" id="modalPreorderConfirm">네, 보내주세요</button>
             </div>
         </div>
     </dialog>
 
-    <dialog id="modal-preorder-result" class="modal" aria-labelledby="modal-preorder-result-title">
+    <dialog id="modal-preorder-result" class="modal modal--preorder" aria-labelledby="modal-preorder-result-title">
         <div class="modal-inner">
             <h2 id="modal-preorder-result-title" class="modal-title">안내</h2>
             <p class="modal-text" id="modal-preorder-result-body"></p>

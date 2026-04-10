@@ -104,6 +104,21 @@ function wirePreorderModals() {
         return;
     }
 
+    const btnPreorderLabel = submitBtn.querySelector('.btn-preorder-label');
+    const btnPreorderLoading = submitBtn.querySelector('.btn-preorder-loading');
+
+    function setPreorderLoading(loading) {
+        submitBtn.disabled = loading;
+        if (loading) {
+            submitBtn.setAttribute('aria-busy', 'true');
+        } else {
+            submitBtn.removeAttribute('aria-busy');
+        }
+        if (btnPreorderLabel) btnPreorderLabel.hidden = loading;
+        if (btnPreorderLoading) btnPreorderLoading.hidden = !loading;
+        submitBtn.classList.toggle('btn-preorder--busy', loading);
+    }
+
     function clearEmailFieldError() {
         if (errEl) {
             errEl.textContent = '';
@@ -132,14 +147,13 @@ function wirePreorderModals() {
         if (confirmDialog.open) confirmDialog.close();
         if (!supabase) {
             showResultModal(
-                '설정 필요',
-                'Supabase 연결 정보가 없습니다. 배포 환경에 js/config.js를 추가했는지 확인해 주세요.',
+                '연결을 확인해 주세요',
+                'Supabase 설정이 필요합니다. 배포 환경의 환경 변수와 빌드가 올바른지 확인해 주세요.',
             );
             return;
         }
 
-        submitBtn.disabled = true;
-        submitBtn.setAttribute('aria-busy', 'true');
+        setPreorderLoading(true);
 
         const email = pendingEmail.value;
         let error;
@@ -147,29 +161,25 @@ function wirePreorderModals() {
             const result = await supabase.from(preorderTable).insert({ email });
             error = result.error;
         } catch {
-            submitBtn.disabled = false;
-            submitBtn.removeAttribute('aria-busy');
+            setPreorderLoading(false);
             showResultModal(
-                '등록 실패',
-                '네트워크 오류가 발생했습니다. 연결을 확인한 뒤 다시 시도해 주세요.',
+                '연결 오류',
+                '네트워크를 확인한 뒤 다시 시도해 주세요.',
             );
             return;
         }
 
-        submitBtn.disabled = false;
-        submitBtn.removeAttribute('aria-busy');
+        setPreorderLoading(false);
 
         if (error) {
             const code = error.code;
             const msg = error.message || '';
             if (code === '23505' || msg.toLowerCase().includes('duplicate') || msg.toLowerCase().includes('unique')) {
-                showResultModal(
-                    '이미 등록됨',
-                    '이미 사전 예약에 등록된 이메일입니다. 다른 주소를 입력해 주세요.',
-                );
+                showEmailFieldError('이미 등록된 이메일이에요. 다른 주소로 시도해 주세요.');
+                emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
                 showResultModal(
-                    '등록 실패',
+                    '잠시 후 다시 시도해 주세요',
                     '일시적인 오류로 등록하지 못했습니다. 잠시 후 다시 시도해 주세요.',
                 );
             }
@@ -177,8 +187,8 @@ function wirePreorderModals() {
         }
 
         showResultModal(
-            '등록 완료',
-            '사전 예약이 완료되었습니다. 정식 출시 소식을 이메일로 안내드리겠습니다.',
+            '알림 등록 완료',
+            '출시 소식은 이 메일로만 보내드릴게요. 기다려 주셔서 고마워요!',
         );
         emailInput.value = '';
         clearEmailFieldError();
@@ -206,7 +216,7 @@ function wirePreorderModals() {
         }
 
         pendingEmail.value = email;
-        confirmBody.textContent = `아래 이메일로 출시 알림을 보내드립니다.\n\n${email}\n\n계속하시겠습니까?`;
+        confirmBody.textContent = `${email}\n\n출시·오픈 소식 알림만 보내드려요. 스팸은 보내지 않아요.`;
         if (!confirmDialog.open) confirmDialog.showModal();
     });
 }
