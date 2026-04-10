@@ -1431,6 +1431,11 @@ body {
     line-height: 1.35;
 }
 
+/* Closed <dialog> must stay hidden — do not set unconditional display on .modal (it overrides UA display:none). */
+dialog.modal:not([open]) {
+    display: none !important;
+}
+
 .modal {
     position: fixed;
     top: 50%;
@@ -1447,6 +1452,10 @@ body {
     background: var(--color-white);
     box-shadow: 12px 12px 0px 0px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+}
+
+dialog.modal[open] {
+    display: block;
 }
 
 .modal::backdrop {
@@ -1518,7 +1527,7 @@ body {
     background: var(--color-gray-200);
 }
 
-.modal.modal--legal {
+dialog.modal.modal--legal[open] {
     width: min(40rem, calc(100vw - 2rem));
     max-height: calc(100vh - 1.5rem);
     overflow: hidden;
