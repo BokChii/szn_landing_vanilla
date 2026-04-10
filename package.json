@@ -1,0 +1,7 @@
+{
+  "name": "szn-landing-vanilla",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/write-supabase-config.mjs"
+  }
+}

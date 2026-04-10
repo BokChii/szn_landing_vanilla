@@ -7,12 +7,16 @@
 ```
 vanilla/
 ├── index.html          # 메인 HTML 파일
+├── package.json        # Vercel 빌드: npm run build → js/config.js 생성
+├── vercel.json         # buildCommand / outputDirectory
+├── scripts/
+│   └── write-supabase-config.mjs  # 환경 변수 → js/config.js
 ├── css/
 │   └── style.css       # 모든 스타일 (Tailwind 없이 순수 CSS)
 ├── js/
 │   ├── main.js         # 앱 로직 (ES module)
 │   ├── config.example.js  # Supabase 설정 예시
-│   └── config.js     # 실제 키 (git에 포함하지 않음 — 예시 복사 후 생성)
+│   └── config.js     # 로컬 또는 빌드 생성 (git에 포함하지 않음)
 ├── assets/             # 이미지 파일들
 │   ├── storit_logo_png.png
 │   ├── main.png
@@ -51,8 +55,23 @@ vanilla/
 ### Supabase 사전 예약
 
 1. Supabase에서 `pre_registrations` 테이블과 RLS(anon INSERT)를 설정합니다.
-2. 저장소를 처음 받았다면 `js/config.example.js`를 복사해 `js/config.js`를 만들고, Project URL·anon public 키·테이블명을 맞춥니다.
+2. **로컬 개발:** `js/config.example.js`를 복사해 `js/config.js`를 만들고 URL·anon 키를 넣거나, 아래처럼 빌드 스크립트로 생성합니다.
+   ```bash
+   set SUPABASE_URL=https://xxx.supabase.co
+   set SUPABASE_ANON_KEY=your-anon-key
+   npm run build
+   ```
+   (PowerShell이면 `$env:SUPABASE_URL="..."` 형식 사용.)
 3. 테이블에 `email` 컬럼이 있어야 하며, 컬럼명이 다르면 Supabase 쪽을 맞추거나 프론트 insert 필드를 조정합니다.
+
+### Vercel 배포와 환경 변수
+
+1. Vercel 프로젝트 **Settings → Environment Variables**에 다음 이름으로 추가합니다. (이름을 정확히 맞춥니다.)
+   - `SUPABASE_URL` — Supabase Project URL
+   - `SUPABASE_ANON_KEY` — anon public 키
+   - (선택) `PREORDER_TABLE` — 기본값 `pre_registrations`
+2. **Production**(및 필요 시 Preview)에 체크한 뒤 저장하고 재배포합니다.
+3. 배포 시 `npm run build`가 `scripts/write-supabase-config.mjs`를 실행해 **`js/config.js`를 생성**합니다. 프리뷰/미리보기에서도 사전 예약을 쓰려면 Preview 환경에 동일 변수를 넣어야 합니다.
 
 ### 접속
 
@@ -100,7 +119,7 @@ vanilla/
 
 - GitHub Pages
 - Netlify
-- Vercel
+- Vercel (`package.json`의 `build`로 Supabase 설정 생성 — 위 **Vercel 배포와 환경 변수** 참고)
 - AWS S3 + CloudFront
 - 기타 정적 호스팅 서비스
 
