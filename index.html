@@ -459,9 +459,9 @@
                         스토릿은 웹툰 팬덤을 위한 퀴즈 리워드 플랫폼입니다.<br> 매일 새로운 퀴즈로 웹툰 지식을 뽐내고,<br> 포인트를 쌓아 특별한 보상을 받으세요.
                     </p>
                     <div class="footer-links">
-                        <a href="#" class="footer-link">고객지원/문의</a>
-                        <a href="#" class="footer-link">이용약관</a>
-                        <a href="#" class="footer-link">개인정보처리방침</a>
+                        <a href="mailto:szn.helpdesk@gmail.com" class="footer-link">고객지원/문의</a>
+                        <a href="#" class="footer-link" id="footerLinkTerms">이용약관</a>
+                        <a href="#" class="footer-link" id="footerLinkPrivacy">개인정보처리방침</a>
                     </div>
                     <div class="footer-social">
                         <a href="https://www.instagram.com/storit.official/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="스토릿 Instagram">
@@ -514,6 +514,93 @@
             <p class="modal-text" id="modal-preorder-result-body"></p>
             <div class="modal-actions modal-actions--single">
                 <button type="button" class="btn-modal btn-modal-primary" id="modalPreorderResultOk">확인</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="modal-terms" class="modal modal--legal" aria-labelledby="modal-terms-title">
+        <div class="modal-inner modal-inner--legal">
+            <h2 id="modal-terms-title" class="modal-title">이용약관 (Terms of Service)</h2>
+            <p class="modal-legal-notice">정식 서비스 오픈 전에 세부 내용이 조정·보완될 수 있습니다.</p>
+            <div class="modal-legal-body">
+                <h3 class="legal-heading">핵심 조항</h3>
+                <section class="legal-section">
+                    <h4 class="legal-subheading">목적 및 서비스 정의</h4>
+                    <p>본 약관은 스토릿이 제공하는 웹툰 퀴즈 참여 및 리워드 포인트 시스템 이용에 관한 이용자와 회사 간의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.</p>
+                </section>
+                <section class="legal-section">
+                    <h4 class="legal-subheading">계약의 성립</h4>
+                    <p>이용자가 본 약관에 동의하고 회원 가입 절차를 완료하거나(해당 시) 이메일 인증 등 회사가 정한 절차를 마친 시점부터 이용계약이 성립하고 약관의 효력이 발생합니다.</p>
+                </section>
+                <section class="legal-section">
+                    <h4 class="legal-subheading">리워드 및 포인트 규정</h4>
+                    <ul class="legal-list">
+                        <li>포인트는 현금으로 환불되거나 제3자에게 양도·매매될 수 없습니다.</li>
+                        <li>포인트의 유효기간은 적립일로부터 <strong>12개월</strong>이며, 기간 만료 시 별도 안내 없이 자동 소멸될 수 있습니다.</li>
+                        <li>회원 탈퇴 시 잔여 포인트는 즉시 소멸되며 복구되지 않습니다.</li>
+                    </ul>
+                </section>
+                <section class="legal-section">
+                    <h4 class="legal-subheading">부정 이용 제한</h4>
+                    <ul class="legal-list">
+                        <li>매크로, 봇(Bot), 대리 풀기 등 비정상적인 방법으로 퀴즈에 참여한 경우, 적립된 리워드는 전액 몰수될 수 있으며 계정이 영구 정지될 수 있습니다.</li>
+                        <li>웹툰 저작권을 침해하는 퀴즈 내용을 외부로 무단 유출하는 행위를 금지합니다.</li>
+                    </ul>
+                </section>
+                <section class="legal-section">
+                    <h4 class="legal-subheading">서비스의 변경 및 중단</h4>
+                    <p>콘텐츠 공급원(웹툰사)과의 계약 종료, 서버 점검, 정책 변경 등 불가피한 사유로 서비스의 전부 또는 일부가 변경·중단될 수 있으며, 가능한 범위에서 사전에 공지합니다.</p>
+                </section>
+                <section class="legal-section">
+                    <h4 class="legal-subheading">면책</h4>
+                    <p>퀴즈 내용·정답 기준에 대한 주관적 해석으로 인한 분쟁, 또는 이용자 단말기·통신 환경 등으로 인한 접속 지연·오류에 대해 회사는 법령이 허용하는 한도 내에서 책임을 지지 않을 수 있습니다.</p>
+                </section>
+            </div>
+            <div class="modal-actions modal-actions--single">
+                <button type="button" class="btn-modal btn-modal-primary" id="modalTermsClose">닫기</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="modal-privacy" class="modal modal--legal" aria-labelledby="modal-privacy-title">
+        <div class="modal-inner modal-inner--legal">
+            <h2 id="modal-privacy-title" class="modal-title">개인정보처리방침 (Privacy Policy)</h2>
+            <p class="modal-legal-notice">정식 서비스 오픈 전에 세부 내용이 조정·보완될 수 있습니다.</p>
+            <div class="modal-legal-body">
+                <h3 class="legal-heading">핵심 조항</h3>
+                <section class="legal-section">
+                    <h4 class="legal-subheading">수집하는 개인정보 항목</h4>
+                    <ul class="legal-list">
+                        <li><strong>(필수)</strong> 이메일 주소, 서비스 이용 기록, 접속 로그, 쿠키, 기기 식별정보(ADID/IDFA 등, 부정 이용 방지 목적).</li>
+                        <li><strong>(리워드 지급 시)</strong> 휴대폰 번호(기프티콘 등 발송용), 성명.</li>
+                    </ul>
+                </section>
+                <section class="legal-section">
+                    <h4 class="legal-subheading">개인정보의 수집 및 이용 목적</h4>
+                    <ul class="legal-list">
+                        <li>회원 식별 및 서비스 제공, 부정 이용 방지.</li>
+                        <li>웹툰 퀴즈 리워드(기프티콘, 포인트 등) 지급 및 배송·안내.</li>
+                        <li>새로운 퀴즈·업데이트·이벤트 알림(사전 예약·마케팅 수신에 동의한 경우 등).</li>
+                    </ul>
+                </section>
+                <section class="legal-section">
+                    <h4 class="legal-subheading">개인정보의 보유 및 이용 기간</h4>
+                    <ul class="legal-list">
+                        <li>원칙적으로 <strong>서비스 탈퇴 시까지</strong> 보유·이용합니다.</li>
+                        <li>관계 법령에 따라 전자상거래 등에서의 계약·청약철회 등에 관한 기록은 5년, 소비자의 불만 또는 분쟁처리에 관한 기록은 3년간 별도 보관할 수 있습니다.</li>
+                    </ul>
+                </section>
+                <section class="legal-section">
+                    <h4 class="legal-subheading">개인정보의 제3자 제공 및 처리위탁</h4>
+                    <p>리워드 상품권·기프티콘 발송을 위해 <strong>기프티콘 발송 대행사</strong> 등에게 업무를 위탁하거나 필요한 범위에서 제공될 수 있으며, 위탁 시 관련 법령에 따라 관리합니다.</p>
+                </section>
+                <section class="legal-section">
+                    <h4 class="legal-subheading">이용자의 권리</h4>
+                    <p>이용자는 언제든지 자신의 개인정보에 대한 열람·정정·삭제, 처리 정지 및 회원 탈퇴 등을 요청할 수 있으며, 회사는 지체 없이 필요한 조치를 합니다.</p>
+                </section>
+            </div>
+            <div class="modal-actions modal-actions--single">
+                <button type="button" class="btn-modal btn-modal-primary" id="modalPrivacyClose">닫기</button>
             </div>
         </div>
     </dialog>

@@ -216,7 +216,7 @@ function wirePreorderModals() {
         }
 
         pendingEmail.value = email;
-        confirmBody.textContent = `${email}\n\n`;
+        confirmBody.textContent = `${email}\n\n출시·오픈 소식 알림만 보내드려요. 스팸은 보내지 않아요.`;
         if (!confirmDialog.open) confirmDialog.showModal();
     });
 }
@@ -241,4 +241,37 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     wirePreorderModals();
+    wireLegalModals();
 });
+
+function wireLegalModals() {
+    const modalTerms = document.getElementById('modal-terms');
+    const modalPrivacy = document.getElementById('modal-privacy');
+    const btnTermsClose = document.getElementById('modalTermsClose');
+    const btnPrivacyClose = document.getElementById('modalPrivacyClose');
+    const linkTerms = document.getElementById('footerLinkTerms');
+    const linkPrivacy = document.getElementById('footerLinkPrivacy');
+
+    if (linkTerms && modalTerms) {
+        linkTerms.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (!modalTerms.open) modalTerms.showModal();
+        });
+    }
+    if (linkPrivacy && modalPrivacy) {
+        linkPrivacy.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (!modalPrivacy.open) modalPrivacy.showModal();
+        });
+    }
+    if (btnTermsClose && modalTerms) {
+        btnTermsClose.addEventListener('click', function () {
+            if (modalTerms.open) modalTerms.close();
+        });
+    }
+    if (btnPrivacyClose && modalPrivacy) {
+        btnPrivacyClose.addEventListener('click', function () {
+            if (modalPrivacy.open) modalPrivacy.close();
+        });
+    }
+}
