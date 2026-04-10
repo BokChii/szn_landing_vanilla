@@ -22,7 +22,7 @@
                     <h1 class="logo-text">스토릿</h1>
                 </div>
                 <div class="header-actions">
-                    <button class="btn-download hidden-sm">앱 다운로드</button>
+                    <button type="button" class="btn-download hidden-sm" onclick="scrollToSection('cta')">사전 예약</button>
                     <button class="btn-menu" id="menuToggle" onclick="toggleMenu()">
                         <svg id="menuIcon" class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -44,7 +44,7 @@
                             <button class="menu-item" onclick="scrollToSection('features')">주요 기능</button>
                             <button class="menu-item" onclick="scrollToSection('flow')">사용법</button>
                             <button class="menu-item" onclick="scrollToSection('reviews')">후기</button>
-                            <button class="menu-item" onclick="scrollToSection('cta')">시작하기</button>
+                            <button class="menu-item" onclick="scrollToSection('cta')">사전 예약</button>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                             재미있게 풀고, 리워드도 받고!
                         </p>
                         <button class="btn-hero">
-                            <span>오늘의 퀴즈 풀러가기</span>
+                            <span>사전 예약하고 알림 받기</span>
                             <svg class="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -379,10 +379,10 @@
                     <div class="cut-badge">CUT #09</div>
                     <div class="panel-content cta-content">
                         <h2 class="cta-title">
-                            오늘의 퀴즈,<br/>지금 시작
+                            사전 예약하고<br/>출시 알림 받기
                         </h2>
                         <p class="cta-description">
-                            스토릿은 '웹툰을 보는 시간' 그대로<br/>웹툰 팬덤을 이어갑니다!
+                            이메일만 남겨 주시면 정식 출시 소식을<br/>가장 먼저 보내드릴게요!
                         </p>
 
                         <div class="cta-mockup">
@@ -399,18 +399,28 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="preorder" class="preorder-block">
+                            <form class="preorder-form" id="preorderForm" novalidate>
+                                <label for="preorder-email" class="preorder-label">이메일</label>
+                                <input type="email" id="preorder-email" name="email" class="preorder-input" placeholder="example@email.com" autocomplete="email" inputmode="email" />
+                                <button type="button" class="btn-preorder" id="preorderSubmit">사전 예약하기</button>
+                            </form>
+                            <p class="preorder-hint">입력하신 주소로만 출시 알림을 보내드려요. 언제든 수신 거부할 수 있어요.</p>
+                        </div>
                         
-                        <div class="cta-buttons">
-                            <button class="btn-cta">
-                                <svg class="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <p class="store-coming-soon">App Store · Google Play 다운로드는 정식 출시 후 활성화됩니다.</p>
+                        <div class="cta-buttons cta-buttons--disabled">
+                            <button type="button" class="btn-cta btn-cta--disabled" disabled aria-disabled="true" title="정식 출시 후 이용 가능">
+                                <svg class="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                     <polyline points="7 10 12 15 17 10"></polyline>
                                     <line x1="12" y1="15" x2="12" y2="3"></line>
                                 </svg>
                                 <span>App Store</span>
                             </button>
-                            <button class="btn-cta">
-                                <svg class="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <button type="button" class="btn-cta btn-cta--disabled" disabled aria-disabled="true" title="정식 출시 후 이용 가능">
+                                <svg class="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                     <polyline points="7 10 12 15 17 10"></polyline>
                                     <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -473,7 +483,28 @@
         </main>
     </div>
 
-    <script src="js/main.js"></script>
+    <dialog id="modal-preorder-confirm" class="modal" aria-labelledby="modal-preorder-confirm-title">
+        <div class="modal-inner">
+            <h2 id="modal-preorder-confirm-title" class="modal-title">사전 예약 확인</h2>
+            <p class="modal-text" id="modal-preorder-confirm-body"></p>
+            <div class="modal-actions">
+                <button type="button" class="btn-modal btn-modal-secondary" id="modalPreorderCancel">취소</button>
+                <button type="button" class="btn-modal btn-modal-primary" id="modalPreorderConfirm">확인</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="modal-preorder-result" class="modal" aria-labelledby="modal-preorder-result-title">
+        <div class="modal-inner">
+            <h2 id="modal-preorder-result-title" class="modal-title">안내</h2>
+            <p class="modal-text" id="modal-preorder-result-body"></p>
+            <div class="modal-actions modal-actions--single">
+                <button type="button" class="btn-modal btn-modal-primary" id="modalPreorderResultOk">확인</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
 

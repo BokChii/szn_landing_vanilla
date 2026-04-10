@@ -10,7 +10,9 @@ vanilla/
 ├── css/
 │   └── style.css       # 모든 스타일 (Tailwind 없이 순수 CSS)
 ├── js/
-│   └── main.js         # 모든 JavaScript 로직
+│   ├── main.js         # 앱 로직 (ES module)
+│   ├── config.example.js  # Supabase 설정 예시
+│   └── config.js     # 실제 키 (git에 포함하지 않음 — 예시 복사 후 생성)
 ├── assets/             # 이미지 파일들
 │   ├── storit_logo_png.png
 │   ├── main.png
@@ -44,7 +46,13 @@ vanilla/
 
 4. **브라우저에서 직접 열기**
    - `index.html` 파일을 브라우저로 드래그 앤 드롭
-   - ⚠️ 일부 기능(예: CORS)이 제한될 수 있습니다.
+   - ⚠️ ES 모듈·Supabase 연동은 **로컬 HTTP 서버**로 열어야 동작합니다 (`file://` 불가).
+
+### Supabase 사전 예약
+
+1. Supabase에서 `pre_registrations` 테이블과 RLS(anon INSERT)를 설정합니다.
+2. 저장소를 처음 받았다면 `js/config.example.js`를 복사해 `js/config.js`를 만들고, Project URL·anon public 키·테이블명을 맞춥니다.
+3. 테이블에 `email` 컬럼이 있어야 하며, 컬럼명이 다르면 Supabase 쪽을 맞추거나 프론트 insert 필드를 조정합니다.
 
 ### 접속
 

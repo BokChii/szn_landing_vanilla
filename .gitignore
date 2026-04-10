@@ -26,6 +26,9 @@ build/
 .env
 .env.local
 
+# Supabase client secrets (copy from js/config.example.js)
+js/config.js
+
 # Temporary files
 *.tmp
 .cache/
