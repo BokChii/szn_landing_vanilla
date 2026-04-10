@@ -20,6 +20,15 @@ function handleScroll() {
             header.classList.remove('scrolled');
         }
     }
+
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) {
+        if (scrollY > 320) {
+            backToTop.classList.add('back-to-top--visible');
+        } else {
+            backToTop.classList.remove('back-to-top--visible');
+        }
+    }
 }
 
 let isMenuOpen = false;
@@ -242,6 +251,13 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     wirePreorderModals();
     wireLegalModals();
+
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) {
+        backToTop.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 });
 
 function wireLegalModals() {
