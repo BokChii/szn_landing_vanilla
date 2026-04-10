@@ -12,7 +12,7 @@ vanilla/
 ├── js/
 │   └── main.js         # 모든 JavaScript 로직
 ├── assets/             # 이미지 파일들
-│   ├── logo.png
+│   ├── storit_logo_png.png
 │   ├── main.png
 │   ├── quiz.png
 │   ├── rank.png
