@@ -216,7 +216,7 @@ function wirePreorderModals() {
         }
 
         pendingEmail.value = email;
-        confirmBody.textContent = `${email}\n\n출시·오픈 소식 알림만 보내드려요.<br> 스팸은 보내지 않아요.`;
+        confirmBody.textContent = `${email}\n\n`;
         if (!confirmDialog.open) confirmDialog.showModal();
     });
 }
