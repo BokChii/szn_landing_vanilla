@@ -1277,6 +1277,23 @@ body {
     color: var(--color-gray-400);
 }
 
+.preorder-input--error {
+    border-color: var(--color-red-600);
+    box-shadow: 4px 4px 0px 0px rgba(220, 38, 38, 0.35);
+}
+
+.preorder-error {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-red-600);
+    margin: -0.25rem 0 0;
+    line-height: 1.4;
+}
+
+.preorder-error[hidden] {
+    display: none !important;
+}
+
 .btn-preorder {
     width: 100%;
     height: 3.5rem;

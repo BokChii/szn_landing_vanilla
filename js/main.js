@@ -1,7 +1,9 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import { SUPABASE_URL, SUPABASE_ANON_KEY, PREORDER_TABLE } from './config.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+let supabase = null;
+let preorderTable = 'pre_registrations';
 
 let isScrolled = false;
 const header = document.getElementById('header');
@@ -61,14 +63,20 @@ function scrollToSection(sectionId) {
 window.scrollToSection = scrollToSection;
 window.toggleMenu = toggleMenu;
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const pendingEmail = { value: '' };
 
-let pendingEmail = '';
-
-function normalizeEmail(value) {
-    return String(value || '')
-        .trim()
-        .toLowerCase();
+async function loadSupabaseFromConfig() {
+    try {
+        const mod = await import('./config.js');
+        const url = mod.SUPABASE_URL;
+        const key = mod.SUPABASE_ANON_KEY;
+        preorderTable = mod.PREORDER_TABLE || preorderTable;
+        if (url && key) {
+            supabase = createClient(url, key);
+        }
+    } catch (e) {
+        console.warn('Supabase config not loaded (add js/config.js from config.example.js):', e);
+    }
 }
 
 function showResultModal(title, message) {
@@ -90,10 +98,31 @@ function wirePreorderModals() {
     const btnResultOk = document.getElementById('modalPreorderResultOk');
     const emailInput = document.getElementById('preorder-email');
     const submitBtn = document.getElementById('preorderSubmit');
+    const errEl = document.getElementById('preorder-email-error');
 
     if (!confirmDialog || !confirmBody || !btnCancel || !btnConfirm || !resultDialog || !btnResultOk || !emailInput || !submitBtn) {
         return;
     }
+
+    function clearEmailFieldError() {
+        if (errEl) {
+            errEl.textContent = '';
+            errEl.hidden = true;
+        }
+        emailInput.classList.remove('preorder-input--error');
+    }
+
+    function showEmailFieldError(message) {
+        if (errEl) {
+            errEl.textContent = message;
+            errEl.hidden = false;
+        }
+        emailInput.classList.add('preorder-input--error');
+        emailInput.focus();
+    }
+
+    emailInput.addEventListener('input', clearEmailFieldError);
+    emailInput.addEventListener('change', clearEmailFieldError);
 
     btnCancel.addEventListener('click', () => {
         if (confirmDialog.open) confirmDialog.close();
@@ -101,13 +130,21 @@ function wirePreorderModals() {
 
     btnConfirm.addEventListener('click', async () => {
         if (confirmDialog.open) confirmDialog.close();
+        if (!supabase) {
+            showResultModal(
+                '설정 필요',
+                'Supabase 연결 정보가 없습니다. 배포 환경에 js/config.js를 추가했는지 확인해 주세요.',
+            );
+            return;
+        }
+
         submitBtn.disabled = true;
         submitBtn.setAttribute('aria-busy', 'true');
 
-        const email = pendingEmail;
+        const email = pendingEmail.value;
         let error;
         try {
-            const result = await supabase.from(PREORDER_TABLE).insert({ email });
+            const result = await supabase.from(preorderTable).insert({ email });
             error = result.error;
         } catch {
             submitBtn.disabled = false;
@@ -144,6 +181,7 @@ function wirePreorderModals() {
             '사전 예약이 완료되었습니다. 정식 출시 소식을 이메일로 안내드리겠습니다.',
         );
         emailInput.value = '';
+        clearEmailFieldError();
     });
 
     btnResultOk.addEventListener('click', () => {
@@ -151,13 +189,23 @@ function wirePreorderModals() {
     });
 
     submitBtn.addEventListener('click', () => {
-        const email = normalizeEmail(emailInput.value);
-        if (!email || !EMAIL_RE.test(email)) {
-            showResultModal('입력 확인', '올바른 이메일 주소를 입력해 주세요.');
-            emailInput.focus();
+        clearEmailFieldError();
+        const raw = emailInput.value;
+        const email = String(raw || '')
+            .trim()
+            .toLowerCase();
+
+        if (!raw.trim()) {
+            showEmailFieldError('이메일을 입력해 주세요.');
             return;
         }
-        pendingEmail = email;
+
+        if (!EMAIL_RE.test(email)) {
+            showEmailFieldError('올바른 이메일 형식으로 입력해 주세요.');
+            return;
+        }
+
+        pendingEmail.value = email;
         confirmBody.textContent = `아래 이메일로 출시 알림을 보내드립니다.\n\n${email}\n\n계속하시겠습니까?`;
         if (!confirmDialog.open) confirmDialog.showModal();
     });
@@ -169,14 +217,16 @@ document.addEventListener('click', function (event) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
+    await loadSupabaseFromConfig();
+
     window.addEventListener('scroll', handleScroll);
     handleScroll();
 
     const heroButton = document.querySelector('.btn-hero');
     if (heroButton) {
         heroButton.addEventListener('click', function () {
-            scrollToSection('cta');
+            scrollToSection('preorder');
         });
     }
 
