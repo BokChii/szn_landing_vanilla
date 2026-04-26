@@ -144,8 +144,7 @@ function render() {
             render();
             return;
         }
-        const partner = r.best_match;
-        const partnerLabel = GENRE_LABELS[partner] || partner;
+        const partnerLabel = GENRE_LABELS[resultKey] || resultKey;
         rootEl.innerHTML = `
             <div class="quiz-screen quiz-screen--result">
                 <p class="quiz-result-badge">${escapeHtml(GENRE_LABELS[resultKey] || resultKey)}</p>

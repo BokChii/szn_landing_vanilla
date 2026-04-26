@@ -1,8 +1,8 @@
 export default {
     "test_metadata": {
-        "title": "스토릿 웹툰 성향 테스트",
+        "title": "스토릿 성향 테스트",
         "version": "1.0",
-        "description": "사용자의 웹툰 취향을 분석하여 최적의 장르와 리워드를 추천하는 서비스",
+        "description": "사용자의 웹툰 취향을 분석하여 최적의 장르를 추천해 드려요!",
         "genres": [
             "romance",
             "fantasy",
@@ -210,7 +210,7 @@ export default {
                 "reflex": 50,
                 "inner_power": 40
             },
-            "best_match": "martial_arts",
+            "best_match": "romance",
             "mascot_visual": "분홍빛 배경, 꽃다발이나 연애편지를 든 수줍은 모습"
         },
         "fantasy": {
@@ -224,7 +224,7 @@ export default {
                 "reflex": 60,
                 "inner_power": 90
             },
-            "best_match": "thriller",
+            "best_match": "fantasy",
             "mascot_visual": "신비로운 숲 배경, 지팡이와 망토를 두른 신비로운 모습"
         },
         "action": {
@@ -238,7 +238,7 @@ export default {
                 "reflex": 100,
                 "inner_power": 80
             },
-            "best_match": "slice",
+            "best_match": "action",
             "mascot_visual": "도심 야경 배경, 테크웨어를 입고 역동적인 포즈"
         },
         "thriller": {
@@ -252,7 +252,7 @@ export default {
                 "reflex": 60,
                 "inner_power": 50
             },
-            "best_match": "fantasy",
+            "best_match": "thriller",
             "mascot_visual": "안개 낀 골목 배경, 바바리코트와 돋보기를 든 모습"
         },
         "slice": {
@@ -266,7 +266,7 @@ export default {
                 "reflex": 40,
                 "inner_power": 60
             },
-            "best_match": "action",
+            "best_match": "slice",
             "mascot_visual": "포근한 방 배경, 잠옷 차림으로 머그컵을 든 모습"
         },
         "martial_arts": {
@@ -280,7 +280,7 @@ export default {
                 "reflex": 80,
                 "inner_power": 100
             },
-            "best_match": "romance",
+            "best_match": "martial_arts",
             "mascot_visual": "대나무 숲 배경, 도복을 입고 삿갓을 쓴 고수의 모습"
         }
     }
