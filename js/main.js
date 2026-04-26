@@ -1,4 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { initQuiz } from './quiz.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -242,12 +243,18 @@ document.addEventListener('DOMContentLoaded', async function () {
     window.addEventListener('scroll', handleScroll);
     handleScroll();
 
-    const heroButton = document.querySelector('.btn-hero');
-    if (heroButton) {
-        heroButton.addEventListener('click', function () {
+    const heroPreorderBtn = document.querySelector('.hero-cta-row .btn-hero:not(.btn-hero--secondary)');
+    if (heroPreorderBtn) {
+        heroPreorderBtn.addEventListener('click', function () {
             scrollToSection('preorder');
         });
     }
+
+    initQuiz({
+        closeMenuIfOpen: () => {
+            if (isMenuOpen) toggleMenu();
+        },
+    });
 
     wirePreorderModals();
     wireLegalModals();

@@ -22,6 +22,7 @@
                     <h1 class="logo-text">스토릿</h1>
                 </div>
                 <div class="header-actions">
+                    <button type="button" class="btn-header-quiz hidden-sm" id="headerOpenQuiz">성향 테스트</button>
                     <button type="button" class="btn-download btn-download--accent hidden-sm" onclick="scrollToSection('preorder')">사전 예약</button>
                     <button class="btn-menu" id="menuToggle" onclick="toggleMenu()">
                         <svg id="menuIcon" class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -44,6 +45,8 @@
                             <button class="menu-item" onclick="scrollToSection('features')">주요 기능</button>
                             <button class="menu-item" onclick="scrollToSection('flow')">사용법</button>
                             <button class="menu-item" onclick="scrollToSection('reviews')">후기</button>
+                            <button type="button" class="menu-item" id="menuOpenQuiz">웹툰 성향 테스트</button>
+                            <button class="menu-item" onclick="scrollToSection('quiz-teaser')">성향 테스트 소개</button>
                             <button class="menu-item" onclick="scrollToSection('preorder')">출시 알림 받기</button>
                         </div>
                     </div>
@@ -77,13 +80,16 @@
                             매일 업로드되는 다양한 장르의 웹툰 퀴즈.<br />
                             재미있게 풀고, 리워드도 받고!
                         </p>
-                        <button class="btn-hero">
-                            <span>사전 예약하고 알림 받기</span>
-                            <svg class="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </button>
+                        <div class="hero-cta-row">
+                            <button type="button" class="btn-hero">
+                                <span>사전 예약하고 알림 받기</span>
+                                <svg class="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </button>
+                            <button type="button" class="btn-hero btn-hero--secondary" id="heroOpenQuiz">웹툰 성향 테스트</button>
+                        </div>
                         <div class="hero-scroll-indicator">
                             <svg class="icon-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -373,6 +379,18 @@
                 </div>
             </section>
 
+            <!-- Webtoon personality quiz teaser -->
+            <section id="quiz-teaser" class="section">
+                <div class="webtoon-panel panel-quiz-teaser">
+                    <div class="cut-badge">BONUS</div>
+                    <div class="panel-content quiz-teaser-content">
+                        <h2 class="quiz-teaser-title">너의 웹툰 내공은?</h2>
+                        <p class="quiz-teaser-lead">6문항으로 찰떡 장르를 찾아줄게. 결과에 맞는 마스코트도 확인해 봐!</p>
+                        <button type="button" class="btn-quiz-teaser" id="teaserOpenQuiz">성향 테스트 시작</button>
+                    </div>
+                </div>
+            </section>
+
             <!-- 9) CTA (Cut 9) -->
             <section id="cta" class="section">
                 <div class="webtoon-panel panel-cta">
@@ -415,7 +433,7 @@
                                     <span class="btn-preorder-loading" hidden aria-hidden="true">등록 중…</span>
                                 </button>
                             </form>
-                            <p class="preorder-hint">개인정보는 출시 알림 목적으로만 사용되며,<br> 언제든 수신 거부할 수 있어요.</p>
+                            <p id="preorder-trust" class="preorder-hint">개인정보는 출시 알림 목적으로만 사용되며,<br> 언제든 수신 거부할 수 있어요.</p>
                         </div>
                         
                         <p class="store-coming-soon">모바일 앱은 정식 오픈과 함께<br> App Store · Google Play에서 만나요.</p>
@@ -496,6 +514,18 @@
             </footer>
         </main>
     </div>
+
+    <dialog id="modal-quiz" class="modal modal--quiz" aria-label="스토릿 웹툰 성향 테스트">
+        <button type="button" class="quiz-modal-close" id="quizModalClose" aria-label="닫기">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <div class="quiz-modal-scroll">
+            <div id="quizRoot" class="quiz-root"></div>
+        </div>
+    </dialog>
 
     <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로 이동" title="맨 위로">
         <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
