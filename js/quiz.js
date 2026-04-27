@@ -199,7 +199,7 @@ function render() {
                 ${q.options
                     .map(
                         (opt, i) => `
-                    <button type="button" class="quiz-option" data-opt="${i}">${escapeHtml(opt.text)}</button>
+                    <button type="button" class="quiz-option quiz-option--bubble" data-opt="${i}" style="--bubble-i:${i}"><span class="quiz-option-text">${escapeHtml(opt.text)}</span></button>
                 `,
                     )
                     .join('')}
