@@ -112,6 +112,13 @@ function escapeHtml(s) {
     return d.innerHTML;
 }
 
+/** 문항별 일러스트 (q1~q5); 6번째 문항은 q5 재사용 */
+function questionImageSrc(questionIndex) {
+    const n = questionIndex + 1;
+    if (n >= 1 && n <= 5) return `assets/q${n}.png`;
+    return 'assets/q5.png';
+}
+
 function render() {
     if (!rootEl) return;
 
@@ -195,6 +202,9 @@ function render() {
             </div>
             <p class="quiz-q-index">${qi + 1} / ${total}</p>
             <h2 class="quiz-q-text">${escapeHtml(q.text)}</h2>
+            <div class="quiz-q-figure" aria-hidden="true">
+                <img src="${questionImageSrc(qi)}" alt="" class="quiz-q-img" width="320" height="200" loading="lazy" decoding="async" />
+            </div>
             <div class="quiz-options" role="group" aria-label="선택지">
                 ${q.options
                     .map(
