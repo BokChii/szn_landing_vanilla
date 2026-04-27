@@ -125,7 +125,7 @@ function render() {
                 <p class="quiz-eyebrow">BONUS</p>
                 <h2 class="quiz-heading">${escapeHtml(meta.title)}</h2>
                 <p class="quiz-lead">${escapeHtml(meta.description)}</p>
-                <p class="quiz-hint">총 ${questions.length}문항 · 가볍게 골라줘!</p>
+                <p class="quiz-hint">총 ${questions.length}문항 · 약 30초 소요!</p>
                 <button type="button" class="btn-quiz-primary" id="quizBtnStart">시작하기</button>
             </div>
         `;
