@@ -112,11 +112,11 @@ function escapeHtml(s) {
     return d.innerHTML;
 }
 
-/** 문항별 일러스트 (q1~q5); 6번째 문항은 q5 재사용 */
+/** 문항별 일러스트 (q1~q6) */
 function questionImageSrc(questionIndex) {
     const n = questionIndex + 1;
-    if (n >= 1 && n <= 5) return `assets/q${n}.png`;
-    return 'assets/q5.png';
+    if (n >= 1 && n <= 6) return `assets/q${n}.png`;
+    return 'assets/q6.png';
 }
 
 function render() {
