@@ -710,22 +710,6 @@ body {
     transform: translateY(0);
 }
 
-.cut-badge {
-    position: absolute;
-    top: 0.8rem;
-    right: 0.8rem;
-    z-index: 20;
-    background: var(--color-black);
-    color: var(--color-white);
-    font-family: monospace;
-    font-size: 0.75rem;
-    font-weight: 900;
-    padding: 0.25rem 0.5rem;
-    transform: rotate(3deg);
-    display: inline-block;
-    line-height: 1.2;
-}
-
 .panel-content {
     padding: 3rem 1.25rem;
 }
