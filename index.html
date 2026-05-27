@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>?ㅽ넗由?- ?뱁댆 ?댁쫰 由ъ썙???뚮옯??/title>
+    <title>스토릿 - 웹툰 퀴즈 리워드 플랫폼</title>
     <link rel="icon" type="image/png" href="assets/storit_logo.png" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -18,12 +18,12 @@
         <header id="header" class="header">
             <div class="header-content">
                 <div class="logo-container" onclick="scrollToSection('hero')">
-                    <img src="assets/storit_logo.png" alt="?ㅽ넗由?濡쒓퀬" class="logo-img" />
-                    <h1 class="logo-text">?ㅽ넗由?/h1>
+                    <img src="assets/storit_logo.png" alt="스토릿 로고" class="logo-img" />
+                    <h1 class="logo-text">스토릿</h1>
                 </div>
                 <div class="header-actions">
-                    <button type="button" class="btn-header-quiz hidden-sm" id="headerOpenQuiz">?깊뼢 ?뚯뒪??/button>
-                    <button type="button" class="btn-download btn-download--accent hidden-sm" onclick="scrollToSection('preorder')">?ъ쟾 ?덉빟</button>
+                    <button type="button" class="btn-header-quiz hidden-sm" id="headerOpenQuiz">성향 테스트</button>
+                    <button type="button" class="btn-download btn-download--accent hidden-sm" onclick="scrollToSection('preorder')">사전 예약</button>
                     <button class="btn-menu" id="menuToggle" onclick="toggleMenu()">
                         <svg id="menuIcon" class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -39,15 +39,15 @@
                     <div id="menuDropdown" class="menu-dropdown hidden">
                         <div class="menu-overlay" onclick="toggleMenu()"></div>
                         <div class="menu-content">
-                            <button class="menu-item" onclick="scrollToSection('hero')">??/button>
-                            <button class="menu-item" onclick="scrollToSection('problem')">臾몄젣??/button>
-                            <button class="menu-item" onclick="scrollToSection('solution')">?붾（??/button>
-                            <button class="menu-item" onclick="scrollToSection('features')">二쇱슂 湲곕뒫</button>
-                            <button class="menu-item" onclick="scrollToSection('flow')">?ъ슜踰?/button>
-                            <button class="menu-item" onclick="scrollToSection('reviews')">?꾧린</button>
-                            <button type="button" class="menu-item" id="menuOpenQuiz">?뱁댆 ?깊뼢 ?뚯뒪??/button>
-                            <button class="menu-item" onclick="scrollToSection('quiz-teaser')">?깊뼢 ?뚯뒪???뚭컻</button>
-                            <button class="menu-item" onclick="scrollToSection('preorder')">異쒖떆 ?뚮┝ 諛쏄린</button>
+                            <button class="menu-item" onclick="scrollToSection('hero')">홈</button>
+                            <button class="menu-item" onclick="scrollToSection('problem')">문제점</button>
+                            <button class="menu-item" onclick="scrollToSection('solution')">솔루션</button>
+                            <button class="menu-item" onclick="scrollToSection('features')">주요 기능</button>
+                            <button class="menu-item" onclick="scrollToSection('flow')">사용법</button>
+                            <button class="menu-item" onclick="scrollToSection('reviews')">후기</button>
+                            <button type="button" class="menu-item" id="menuOpenQuiz">웹툰 성향 테스트</button>
+                            <button class="menu-item" onclick="scrollToSection('quiz-teaser')">성향 테스트 소개</button>
+                            <button class="menu-item" onclick="scrollToSection('preorder')">출시 알림 받기</button>
                         </div>
                     </div>
                 </div>
@@ -65,30 +65,30 @@
                 <div class="hero-content">
                     <div class="hero-top">
                         <div class="hero-logo-wrapper">
-                            <img src="assets/storit_logo.png" alt="?ㅽ넗由?濡쒓퀬" class="hero-logo" />
+                            <img src="assets/storit_logo.png" alt="스토릿 로고" class="hero-logo" />
                         </div>
-                        <div class="hero-badge">?ㅼ뼇???λⅤ 쨌 留ㅼ씪 ?낅뜲?댄듃 쨌 ?щ??덈뒗 由ъ썙??/div>
+                        <div class="hero-badge">다양한 장르 · 매일 업데이트 · 재미있는 리워드</div>
                         <h1 class="hero-title">
-                            ?댁쫰濡?利먭린怨?<br />
-                            <span class="hero-title-gradient">由ъ썙?쒕줈 ?④린??/span><br />
-                            ?뱁댆 ?щ뜡 寃쏀뿕
+                            퀴즈로 즐기고,<br />
+                            <span class="hero-title-gradient">리워드로 남기는</span><br />
+                            웹툰 팬덤 경험
                         </h1>
                     </div>
                     <div class="hero-spacer"></div>
                     <div class="hero-bottom">
                         <p class="hero-description">
-                            留ㅼ씪 ?낅줈?쒕릺???ㅼ뼇???λⅤ???뱁댆 ?댁쫰.<br />
-                            ?щ??덇쾶 ?怨? 由ъ썙?쒕룄 諛쏄퀬!
+                            매일 업로드되는 다양한 장르의 웹툰 퀴즈.<br />
+                            재미있게 풀고, 리워드도 받고!
                         </p>
                         <div class="hero-cta-row">
                             <button type="button" class="btn-hero">
-                                <span>?ъ쟾 ?덉빟?섍퀬 ?뚮┝ 諛쏄린</span>
+                                <span>사전 예약하고 알림 받기</span>
                                 <svg class="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                     <polyline points="12 5 19 12 12 19"></polyline>
                                 </svg>
                             </button>
-                            <button type="button" class="btn-hero btn-hero--secondary" id="heroOpenQuiz">?뱁댆 ?깊뼢 ?뚯뒪??/button>
+                            <button type="button" class="btn-hero btn-hero--secondary" id="heroOpenQuiz">웹툰 성향 테스트</button>
                         </div>
                         <div class="hero-scroll-indicator">
                             <svg class="icon-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -105,7 +105,7 @@
                 <div class="speech-bubble-container speech-left">
                     <div class="speech-bubble">
                         <div class="speech-shadow"></div>
-                        <div class="speech-content">"?좉퉸留뚢??닿굅 ?섎룄 留욏옄 ???덇쿋?붾뜲?"</div>
+                        <div class="speech-content">"잠깐만… 이거 나도 맞힐 수 있겠는데?"</div>
                         <div class="speech-tail speech-tail-left"></div>
                     </div>
                 </div>
@@ -113,31 +113,31 @@
                 <div class="webtoon-panel">
                     <div class="panel-content">
                         <h2 class="problem-title">
-                            ?뱁댆? 留ㅼ씪 蹂대뒗??<br />
+                            웹툰은 매일 보는데,<br />
                             <span class="problem-highlight">
-                                <span class="highlight-text">??利먭만 ???덈뒗 諛⑸쾿? </span>
+                                <span class="highlight-text">더 즐길 수 있는 방법은 </span>
                                 <span class="highlight-bg"></span>
-                            </span>?놁??
+                            </span>없지?
                         </h2>
                         
                         <div class="problem-list">
                             <div class="problem-item problem-item-1">
-                                <div class="problem-icon">??/div>
-                                <span class="problem-text">?볤?? ??대컢 ?볦튂硫???/span>
+                                <div class="problem-icon">✕</div>
+                                <span class="problem-text">댓글은 타이밍 놓치면 끝</span>
                             </div>
                             <div class="problem-item problem-item-2">
-                                <div class="problem-icon">??/div>
-                                <span class="problem-text">援우쫰 ?대깽?몃뒗 寃쎌웳瑜???/span>
+                                <div class="problem-icon">✕</div>
+                                <span class="problem-text">굿즈 이벤트는 경쟁률 헬</span>
                             </div>
                             <div class="problem-item problem-item-3">
-                                <div class="problem-icon">??/div>
-                                <span class="problem-text">???뺤쭏??湲곕줉??怨녹씠 ?놁쓬</span>
+                                <div class="problem-icon">✕</div>
+                                <span class="problem-text">내 덕질을 기록할 곳이 없음</span>
                             </div>
                         </div>
 
                         <div class="problem-solution">
                             <p class="solution-text">
-                                ?ㅽ넗由우?<br/>?щ뜡??<span class="solution-highlight">'寃뚯엫泥섎읆'</span> 留뚮벊?덈떎.
+                                스토릿은<br/>팬덤을 <span class="solution-highlight">'게임처럼'</span> 만듭니다.
                             </p>
                         </div>
                     </div>
@@ -147,8 +147,8 @@
             <!-- Marquee Section -->
             <div class="marquee marquee-left">
                 <div class="marquee-content">
-                    <span>WEBTOON QUIZ REWARD 쨌 DAILY UPDATE 쨌 RANKING BATTLE 쨌 </span>
-                    <span>WEBTOON QUIZ REWARD 쨌 DAILY UPDATE 쨌 RANKING BATTLE 쨌 </span>
+                    <span>WEBTOON QUIZ REWARD · DAILY UPDATE · RANKING BATTLE · </span>
+                    <span>WEBTOON QUIZ REWARD · DAILY UPDATE · RANKING BATTLE · </span>
                 </div>
             </div>
 
@@ -168,10 +168,11 @@
                             </svg>
                         </div>
                         <h2 class="solution-title">
-                            留ㅼ씪 ?댁쫰 ??而?<br/>由ъ썙????而?                        </h2>
+                            매일 퀴즈 한 컷,<br/>리워드 한 컷
+                        </h2>
                         <p class="solution-description">
-                            李몄뿬 ??踰덉씠硫?br/>
-                            <span class="solution-underline">利먭굅???ы솢???꾨즺!</span>
+                            참여 한 번이면<br/>
+                            <span class="solution-underline">즐거운 팬활동 완료!</span>
                         </p>
                     </div>
                 </div>
@@ -179,8 +180,8 @@
             
             <div class="marquee marquee-right marquee-yellow">
                 <div class="marquee-content">
-                    <span>30 SECONDS CUT 쨌 JUST TAP 쨌 GET REWARD 쨌 </span>
-                    <span>30 SECONDS CUT 쨌 JUST TAP 쨌 GET REWARD 쨌 </span>
+                    <span>30 SECONDS CUT · JUST TAP · GET REWARD · </span>
+                    <span>30 SECONDS CUT · JUST TAP · GET REWARD · </span>
                 </div>
             </div>
 
@@ -190,7 +191,7 @@
                 <div class="speech-bubble-container speech-right">
                     <div class="speech-bubble">
                         <div class="speech-shadow"></div>
-                        <div class="speech-content">"??臾몄젣留???ㅺ퀬 ?덈뒗?겸?</div>
+                        <div class="speech-content">"한 문제만 풀려고 했는데…"</div>
                         <div class="speech-tail speech-tail-right"></div>
                     </div>
                 </div>
@@ -205,7 +206,7 @@
                                 <div class="phone-volume-btn phone-volume-bottom"></div>
                                 <div class="phone-screen">
                                     <div class="phone-notch"></div>
-                                    <img src="assets/quiz.png" alt="?ㅽ넗由??댁쫰 ?붾㈃" class="phone-image" width="375" height="812" loading="lazy" decoding="async" />
+                                    <img src="assets/quiz.png" alt="스토릿 퀴즈 화면" class="phone-image" width="375" height="812" loading="lazy" decoding="async" />
                                     <div class="phone-gloss"></div>
                                 </div>
                             </div>
@@ -218,10 +219,10 @@
                                     </svg>
                                     FAST
                                 </span>
-                                ?ㅻ뒛???댁쫰??"鍮좊Ⅴ寃?
+                                오늘의 퀴즈는 "빠르게"
                             </h3>
                             <p class="feature-description">
-                                ?ㅼ뼇???λⅤ???뱁댆 ?댁쫰瑜?br/>?щ??덇쾶, 留ㅼ씪 30珥?而?
+                                다양한 장르의 웹툰 퀴즈를<br/>재미있게, 매일 30초 컷.
                             </p>
                         </div>
                     </div>
@@ -238,7 +239,7 @@
                                 <div class="phone-volume-btn phone-volume-bottom"></div>
                                 <div class="phone-screen">
                                     <div class="phone-notch"></div>
-                                    <img src="assets/shop.png" alt="?ㅽ넗由??곸젏 ?붾㈃" class="phone-image" width="372" height="812" loading="lazy" decoding="async" />
+                                    <img src="assets/shop.png" alt="스토릿 상점 화면" class="phone-image" width="372" height="812" loading="lazy" decoding="async" />
                                     <div class="phone-gloss"></div>
                                 </div>
                             </div>
@@ -252,10 +253,10 @@
                                     </svg>
                                     REWARD
                                 </span>
-                                ?댁쫰 ?硫?諛붾줈 "?곷┰"
+                                퀴즈 풀면 바로 "적립"
                             </h3>
                             <p class="feature-description">
-                                留욏엳硫??ъ씤?멸? 諛붾줈 ?곷┰.<br/>?볦씤 ?ъ씤?몃줈 ?먰븯??蹂댁긽 ?띾뱷.
+                                맞히면 포인트가 바로 적립.<br/>쌓인 포인트로 원하는 보상 획득.
                             </p>
                         </div>
                     </div>
@@ -265,7 +266,7 @@
                 <div class="speech-bubble-container speech-center">
                     <div class="speech-bubble">
                         <div class="speech-shadow"></div>
-                        <div class="speech-content">"?ㅻ뒛 ??궧 1?? ??嫄곕떎."</div>
+                        <div class="speech-content">"오늘 랭킹 1등, 내 거다."</div>
                         <div class="speech-tail speech-tail-center"></div>
                     </div>
                 </div>
@@ -279,7 +280,7 @@
                                 <div class="phone-volume-btn phone-volume-bottom"></div>
                                 <div class="phone-screen">
                                     <div class="phone-notch"></div>
-                                    <img src="assets/rank.png" alt="?ㅽ넗由???궧 ?붾㈃" class="phone-image" width="372" height="812" loading="lazy" decoding="async" />
+                                    <img src="assets/rank.png" alt="스토릿 랭킹 화면" class="phone-image" width="372" height="812" loading="lazy" decoding="async" />
                                     <div class="phone-gloss"></div>
                                 </div>
                             </div>
@@ -297,10 +298,10 @@
                                     </svg>
                                     RANKING
                                 </span>
-                                ??궧?쇰줈 "??踰???
+                                랭킹으로 "한 번 더"
                             </h3>
                             <p class="feature-description">
-                                媛쒖씤 ??궧遺??? ??궧源뚯?.<br/>?곸쐞沅뚯씪?섎줉 蹂댁긽??而ㅼ쭛?덈떎.
+                                개인 랭킹부터 팀 랭킹까지.<br/>상위권일수록 보상이 커집니다.
                             </p>
                         </div>
                     </div>
@@ -311,26 +312,26 @@
             <section id="flow" class="section">
                 <div class="webtoon-panel panel-flow">
                     <div class="panel-content flow-content">
-                        <h2 class="flow-title">?ъ슜踰뺤? 吏꾩쭨 媛꾨떒?댁슂!</h2>
+                        <h2 class="flow-title">사용법은 진짜 간단해요!</h2>
                         
                         <div class="flow-steps">
                             <div class="flow-line"></div>
                             <div class="flow-step">
                                 <div class="flow-number">1</div>
-                                <div class="flow-text">?ㅻ뒛???댁쫰瑜??곕떎</div>
+                                <div class="flow-text">오늘의 퀴즈를 연다</div>
                             </div>
                             <div class="flow-step">
                                 <div class="flow-number">2</div>
-                                <div class="flow-text">30珥??덉뿉 ?쇰떎</div>
+                                <div class="flow-text">30초 안에 푼다</div>
                             </div>
                             <div class="flow-step">
                                 <div class="flow-number">3</div>
-                                <div class="flow-text">??궧/由ъ썙?쒕? ?뺤씤?쒕떎</div>
+                                <div class="flow-text">랭킹/리워드를 확인한다</div>
                             </div>
                         </div>
 
                         <div class="flow-note">
-                            <p>"?뱁댆 蹂대떎媛 ?щ뒗 ?쒓컙???щ??덇쾶!"</p>
+                            <p>"웹툰 보다가 쉬는 시간에 재미있게!"</p>
                         </div>
                     </div>
                 </div>
@@ -341,8 +342,8 @@
                 <div class="webtoon-panel panel-reviews">
                     <div class="panel-content reviews-content">
                         <h2 class="reviews-title">
-                            ?ㅻ뒛???꾧뎔媛??br/>
-                            <span class="reviews-highlight">30珥덈줈 ?닿꼈??</span>
+                            오늘도 누군가는<br/>
+                            <span class="reviews-highlight">30초로 이겼다!</span>
                         </h2>
                         <div class="reviews-grid">
                             <div class="review-card review-card-1">
@@ -350,21 +351,21 @@
                                     <div class="review-avatar">U1</div>
                                     <span class="review-user">User101</span>
                                 </div>
-                                <p class="review-text">"異쒓렐湲몄뿉 ?뱁댆 ?댁쫰 ?怨?由ъ썙???볦씠??寃??щ컡??</p>
+                                <p class="review-text">"출근길에 웹툰 퀴즈 풀고 리워드 쌓이는 게 재밌음"</p>
                             </div>
                             <div class="review-card review-card-2">
                                 <div class="review-header">
                                     <div class="review-avatar">U2</div>
                                     <span class="review-user">User202</span>
                                 </div>
-                                <p class="review-text">"?뺤쭏???듦??????뗣뀑"</p>
+                                <p class="review-text">"덕질이 습관이 됨 ㅋㅋ"</p>
                             </div>
                             <div class="review-card review-card-3">
                                 <div class="review-header">
                                     <div class="review-avatar">U3</div>
                                     <span class="review-user">User303</span>
                                 </div>
-                                <p class="review-text">"移쒓뎄????궧 寃쎌웳?섎뒗 寃??洹?以묐룆"</p>
+                                <p class="review-text">"친구랑 랭킹 경쟁하는 게 은근 중독"</p>
                             </div>
                         </div>
                     </div>
@@ -375,9 +376,9 @@
             <section id="quiz-teaser" class="section">
                 <div class="webtoon-panel panel-quiz-teaser">
                     <div class="panel-content quiz-teaser-content">
-                        <h2 class="quiz-teaser-title">?덉쓽 ?뱁댆 ?닿났??</h2>
-                        <p class="quiz-teaser-lead">6臾명빆?쇰줈 李곕뼞 ?λⅤ瑜?李얠븘以꾧쾶. 寃곌낵??留욌뒗 留덉뒪肄뷀듃???뺤씤??遊?</p>
-                        <button type="button" class="btn-quiz-teaser" id="teaserOpenQuiz">?깊뼢 ?뚯뒪???쒖옉</button>
+                        <h2 class="quiz-teaser-title">너의 웹툰 내공은?</h2>
+                        <p class="quiz-teaser-lead">6문항으로 찰떡 장르를 찾아줄게. 결과에 맞는 마스코트도 확인해 봐!</p>
+                        <button type="button" class="btn-quiz-teaser" id="teaserOpenQuiz">성향 테스트 시작</button>
                     </div>
                 </div>
             </section>
@@ -387,10 +388,10 @@
                 <div class="webtoon-panel panel-cta">
                     <div class="panel-content cta-content">
                         <h2 class="cta-title">
-                            ?ъ쟾 ?덉빟?섍퀬<br/>媛??癒쇱? ?뚮┝ 諛쏄린
+                            사전 예약하고<br/>가장 먼저 알림 받기
                         </h2>
                         <p class="cta-description">
-                            ?대찓?쇱쓣 ?④꺼二쇱떆硫?異쒖떆?셋룹삤???뚯떇??br/><strong class="cta-description-strong">媛??癒쇱?</strong> ?꾪빐?쒕┫寃뚯슂.
+                            이메일을 남겨주시면 출시일·오픈 소식을<br/><strong class="cta-description-strong">가장 먼저</strong> 전해드릴게요.
                         </p>
 
                         <div class="cta-mockup">
@@ -401,7 +402,7 @@
                                     <div class="phone-volume-btn phone-volume-bottom"></div>
                                     <div class="phone-screen">
                                         <div class="phone-notch"></div>
-                                        <img src="assets/main.png" alt="?ㅽ넗由????붾㈃" class="phone-image" width="375" height="812" loading="lazy" decoding="async" />
+                                        <img src="assets/main.png" alt="스토릿 홈 화면" class="phone-image" width="375" height="812" loading="lazy" decoding="async" />
                                         <div class="phone-gloss"></div>
                                     </div>
                                 </div>
@@ -410,25 +411,25 @@
 
                         <div id="preorder" class="preorder-block preorder-card">
                             <div class="preorder-card-header">
-                                <span class="preorder-badge">異쒖떆 ?뚮┝</span>
-                                <h3 class="preorder-card-title">?대찓?쇰쭔 ?④린硫??앹씠?먯슂</h3>
-                                <p class="preorder-card-lead">?먯＜ ?곕뒗 二쇱냼瑜??곸뼱 二쇱꽭?? ?ㅽ뵂 ?뚯떇留?蹂대궡?쒕┫寃뚯슂.</p>
+                                <span class="preorder-badge">출시 알림</span>
+                                <h3 class="preorder-card-title">이메일만 남기면 끝이에요</h3>
+                                <p class="preorder-card-lead">자주 쓰는 주소를 적어 주세요. 오픈 소식만 보내드릴게요.</p>
                             </div>
                             <form class="preorder-form" id="preorderForm" novalidate>
-                                <label for="preorder-email" class="preorder-label">?뚮┝ 諛쏆쓣 ?대찓??/label>
-                                <input type="email" id="preorder-email" name="email" class="preorder-input" placeholder="?대찓?쇱쓣 ?낅젰??二쇱꽭?? autocomplete="email" inputmode="email" aria-describedby="preorder-email-error preorder-trust" />
+                                <label for="preorder-email" class="preorder-label">알림 받을 이메일</label>
+                                <input type="email" id="preorder-email" name="email" class="preorder-input" placeholder="이메일을 입력해 주세요" autocomplete="email" inputmode="email" aria-describedby="preorder-email-error preorder-trust" />
                                 <p id="preorder-email-error" class="preorder-error" role="alert" aria-live="polite" hidden></p>
                                 <button type="button" class="btn-preorder" id="preorderSubmit">
-                                    <span class="btn-preorder-label">異쒖떆 ?뚮┝ 諛쏄린</span>
-                                    <span class="btn-preorder-loading" hidden aria-hidden="true">?깅줉 以묅?/span>
+                                    <span class="btn-preorder-label">출시 알림 받기</span>
+                                    <span class="btn-preorder-loading" hidden aria-hidden="true">등록 중…</span>
                                 </button>
                             </form>
-                            <p id="preorder-trust" class="preorder-hint">媛쒖씤?뺣낫??異쒖떆 ?뚮┝ 紐⑹쟻?쇰줈留??ъ슜?섎ŉ,<br> ?몄젣???섏떊 嫄곕??????덉뼱??</p>
+                            <p id="preorder-trust" class="preorder-hint">개인정보는 출시 알림 목적으로만 사용되며,<br> 언제든 수신 거부할 수 있어요.</p>
                         </div>
                         
-                        <p class="store-coming-soon">紐⑤컮???깆? ?뺤떇 ?ㅽ뵂怨??④퍡<br> App Store 쨌 Google Play?먯꽌 留뚮굹??</p>
+                        <p class="store-coming-soon">모바일 앱은 정식 오픈과 함께<br> App Store · Google Play에서 만나요.</p>
                         <div class="cta-buttons cta-buttons--disabled">
-                            <button type="button" class="btn-cta btn-cta--disabled" disabled aria-disabled="true" title="?뺤떇 異쒖떆 ???댁슜 媛??>
+                            <button type="button" class="btn-cta btn-cta--disabled" disabled aria-disabled="true" title="정식 출시 후 이용 가능">
                                 <svg class="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                     <polyline points="7 10 12 15 17 10"></polyline>
@@ -436,7 +437,7 @@
                                 </svg>
                                 <span>App Store</span>
                             </button>
-                            <button type="button" class="btn-cta btn-cta--disabled" disabled aria-disabled="true" title="?뺤떇 異쒖떆 ???댁슜 媛??>
+                            <button type="button" class="btn-cta btn-cta--disabled" disabled aria-disabled="true" title="정식 출시 후 이용 가능">
                                 <svg class="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                     <polyline points="7 10 12 15 17 10"></polyline>
@@ -449,7 +450,7 @@
                         <div class="cta-link">
                             <p class="cta-or">OR</p>
                             <a href="https://sungzwa.net/home" target="_blank" rel="noopener noreferrer" class="cta-web-link">
-                                ?ㅼ튂 ?놁씠 ?뱀뿉???섎윭蹂닿린
+                                설치 없이 웹에서 둘러보기
                             </a>
                         </div>
                     </div>
@@ -460,36 +461,36 @@
             <footer class="footer">
                 <div class="footer-content">
                     <div class="footer-logo">
-                        <img src="assets/storit_logo.png" alt="?ㅽ넗由?濡쒓퀬" class="footer-logo-img" />
-                        <h2 class="footer-title">?ㅽ넗由?/h2>
+                        <img src="assets/storit_logo.png" alt="스토릿 로고" class="footer-logo-img" />
+                        <h2 class="footer-title">스토릿</h2>
                     </div>
                     <p class="footer-description">
-                        ?ㅽ넗由우? ?뱁댆 ?щ뜡???꾪븳 ?댁쫰 由ъ썙???뚮옯?쇱엯?덈떎.<br> 留ㅼ씪 ?덈줈???댁쫰濡??뱁댆 吏?앹쓣 戮먮궡怨?<br> ?ъ씤?몃? ?볦븘 ?밸퀎??蹂댁긽??諛쏆쑝?몄슂.
+                        스토릿은 웹툰 팬덤을 위한 퀴즈 리워드 플랫폼입니다.<br> 매일 새로운 퀴즈로 웹툰 지식을 뽐내고,<br> 포인트를 쌓아 특별한 보상을 받으세요.
                     </p>
                     <div class="footer-links">
-                        <a href="mailto:szn.helpdesk@gmail.com" class="footer-link">怨좉컼吏??臾몄쓽</a>
-                        <a href="#" class="footer-link" id="footerLinkTerms">?댁슜?쎄?</a>
-                        <a href="#" class="footer-link" id="footerLinkPrivacy">媛쒖씤?뺣낫泥섎━諛⑹묠</a>
+                        <a href="mailto:szn.helpdesk@gmail.com" class="footer-link">고객지원/문의</a>
+                        <a href="#" class="footer-link" id="footerLinkTerms">이용약관</a>
+                        <a href="#" class="footer-link" id="footerLinkPrivacy">개인정보처리방침</a>
                     </div>
                     <div class="footer-social">
-                        <a href="https://www.instagram.com/storit.official/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="?ㅽ넗由?Instagram">
+                        <a href="https://www.instagram.com/storit.official/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="스토릿 Instagram">
                             <svg class="icon-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                             </svg>
                         </a>
-                        <a href="https://x.com/Storit_official" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="?ㅽ넗由?X">
+                        <a href="https://x.com/Storit_official" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="스토릿 X">
                             <svg class="icon-x" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
                             </svg>
                         </a>
-                        <a href="https://www.threads.com/@storit.official" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="?ㅽ넗由?Threads">
+                        <a href="https://www.threads.com/@storit.official" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="스토릿 Threads">
                             <svg class="icon-threads" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65Zm1.003-11.69c-.242 0-.487.007-.739.021-1.836.103-2.98.946-2.916 2.143.067 1.256 1.452 1.839 2.784 1.767 1.224-.065 2.818-.543 3.086-3.71a10.5 10.5 0 0 0-2.215-.221z"></path>
                             </svg>
                         </a>
-                        <a href="mailto:szn.helpdesk@gmail.com" class="social-icon" aria-label="?ㅽ넗由?怨좉컼 吏???대찓??>
+                        <a href="mailto:szn.helpdesk@gmail.com" class="social-icon" aria-label="스토릿 고객 지원 이메일">
                             <svg class="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                                 <polyline points="22,6 12,13 2,6"></polyline>
@@ -498,15 +499,15 @@
                     </div>
                     <div class="footer-divider"></div>
                     <p class="footer-copyright">
-                        짤 2026 ?ㅽ넗由? ?ъ떖??湲곕줉?섎뒗 媛??媛踰쇱슫 諛⑸쾿.
+                        © 2026 스토릿. 팬심을 기록하는 가장 가벼운 방법.
                     </p>
                 </div>
             </footer>
         </main>
     </div>
 
-    <dialog id="modal-quiz" class="modal modal--quiz" aria-label="?ㅽ넗由??뱁댆 ?깊뼢 ?뚯뒪??>
-        <button type="button" class="quiz-modal-close" id="quizModalClose" aria-label="?リ린">
+    <dialog id="modal-quiz" class="modal modal--quiz" aria-label="스토릿 웹툰 성향 테스트">
+        <button type="button" class="quiz-modal-close" id="quizModalClose" aria-label="닫기">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -517,7 +518,7 @@
         </div>
     </dialog>
 
-    <button type="button" id="backToTop" class="back-to-top" aria-label="留??꾨줈 ?대룞" title="留??꾨줈">
+    <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로 이동" title="맨 위로">
         <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 19V5M5 12l7-7 7 7"></path>
         </svg>
@@ -525,112 +526,112 @@
 
     <dialog id="modal-preorder-confirm" class="modal modal--preorder" aria-labelledby="modal-preorder-confirm-title">
         <div class="modal-inner">
-            <h2 id="modal-preorder-confirm-title" class="modal-title">??二쇱냼濡??뚮┝??蹂대궡?쒕┫源뚯슂?</h2>
+            <h2 id="modal-preorder-confirm-title" class="modal-title">이 주소로 알림을 보내드릴까요?</h2>
             <p class="modal-text" id="modal-preorder-confirm-body"></p>
             <div class="modal-actions">
-                <button type="button" class="btn-modal btn-modal-secondary" id="modalPreorderCancel">?ㅼ떆 ?낅젰</button>
-                <button type="button" class="btn-modal btn-modal-primary" id="modalPreorderConfirm">?? 蹂대궡二쇱꽭??/button>
+                <button type="button" class="btn-modal btn-modal-secondary" id="modalPreorderCancel">다시 입력</button>
+                <button type="button" class="btn-modal btn-modal-primary" id="modalPreorderConfirm">네, 보내주세요</button>
             </div>
         </div>
     </dialog>
 
     <dialog id="modal-preorder-result" class="modal modal--preorder" aria-labelledby="modal-preorder-result-title">
         <div class="modal-inner">
-            <h2 id="modal-preorder-result-title" class="modal-title">?덈궡</h2>
+            <h2 id="modal-preorder-result-title" class="modal-title">안내</h2>
             <p class="modal-text" id="modal-preorder-result-body"></p>
             <div class="modal-actions modal-actions--single">
-                <button type="button" class="btn-modal btn-modal-primary" id="modalPreorderResultOk">?뺤씤</button>
+                <button type="button" class="btn-modal btn-modal-primary" id="modalPreorderResultOk">확인</button>
             </div>
         </div>
     </dialog>
 
     <dialog id="modal-terms" class="modal modal--legal" aria-labelledby="modal-terms-title">
         <div class="modal-inner modal-inner--legal">
-            <h2 id="modal-terms-title" class="modal-title">?ㅽ넗由?Storit) ?쒕퉬???댁슜?쎄?</h2>
+            <h2 id="modal-terms-title" class="modal-title">스토릿(Storit) 서비스 이용약관</h2>
             <div class="modal-legal-body">
                 <section class="legal-section">
-                    <h4 class="legal-subheading">??議?(紐⑹쟻)</h4>
-                    <p>蹂??쎄?? ?꾨젅?쒕????댄븯 &quot;?뚯궗&quot;)媛 ?쒓났?섎뒗 ?ㅽ넗由?Storit)(?댄븯 &quot;?쒕퉬??quot;)???댁슜怨?愿?⑦븯???뚯궗? ?뚯썝 媛꾩쓽 沅뚮━, ?섎Т 諛?梨낆엫?ы빆??洹쒖젙?⑥쓣 紐⑹쟻?쇰줈 ?⑸땲??</p>
+                    <h4 class="legal-subheading">제1조 (목적)</h4>
+                    <p>본 약관은 프레시밀크(이하 &quot;회사&quot;)가 제공하는 스토릿(Storit)(이하 &quot;서비스&quot;)의 이용과 관련하여 회사와 회원 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
                 </section>
                 <section class="legal-section">
-                    <h4 class="legal-subheading">??議?(?뚯썝媛??諛??댁슜怨꾩빟 泥닿껐)</h4>
-                    <p>???댁슜怨꾩빟? 媛?낆떊泥?옄媛 移댁뭅?? ?ㅼ씠踰? 援ш? ?깆쓽 ?뚯뀥 怨꾩젙???듯빐 ?쎄????숈쓽?섍퀬 媛?낆쓣 ?좎껌???? ?뚯궗媛 ?대? ?밸굺?⑥쑝濡쒖뜥 泥닿껐?⑸땲??</p>
-                    <p>??媛?낆떊泥?옄媛 留?14??誘몃쭔???꾨룞??寃쎌슦, 愿??踰뺣졊???곕씪 踰뺤젙?由ъ씤(遺紐??????숈쓽瑜??살뼱???뚯썝媛??諛??쒕퉬???댁슜??媛?ν빀?덈떎. ?뚯궗??踰뺤젙?由ъ씤???숈쓽媛 ?뺤씤?섏? ?딆? 寃쎌슦 ?댁슜怨꾩빟??痍⑥냼?섍굅???쒕퉬???댁슜???쒗븳?????덉뒿?덈떎.</p>
+                    <h4 class="legal-subheading">제2조 (회원가입 및 이용계약 체결)</h4>
+                    <p>① 이용계약은 가입신청자가 카카오, 네이버, 구글 등의 소셜 계정을 통해 약관에 동의하고 가입을 신청한 후, 회사가 이를 승낙함으로써 체결됩니다.</p>
+                    <p>② 가입신청자가 만 14세 미만의 아동인 경우, 관련 법령에 따라 법정대리인(부모 등)의 동의를 얻어야 회원가입 및 서비스 이용이 가능합니다. 회사는 법정대리인의 동의가 확인되지 않은 경우 이용계약을 취소하거나 서비스 이용을 제한할 수 있습니다.</p>
                 </section>
                 <section class="legal-section">
-                    <h4 class="legal-subheading">??議?(由ъ썙??諛??ъ씤???뺤콉)</h4>
-                    <p>???뚯썝? ?쒕퉬?????뱁댆 ?댁쫰 ?뺣떟, ?대깽??李몄뿬 ?깆쓽 ?쒕룞???듯빐 ?뚯궗?먯꽌 ?뺥븳 湲곗????곕씪 ?ъ씤???먮뒗 由ъ썙??瑜??곷┰ 諛쏆쓣 ???덉뒿?덈떎.</p>
-                    <p>???곷┰???ъ씤?몃뒗 ?뚯궗媛 ?뺥븳 諛⑸쾿 諛??쒗쑕泥섏뿉???ъ슜?????덉쑝硫? ?꾧툑 ?섍툒 媛???щ? 諛?鍮꾩쑉? ?쒕퉬????蹂꾨룄 怨좎???諛붿뿉 ?곕쫭?덈떎.</p>
-                    <p>??(遺???곷┰ 湲덉?) ?뚯썝? 留ㅽ겕濡??꾨줈洹몃옩 ?ъ슜, ??몄쓽 紐낆쓽 ?꾩슜, ?쒖뒪???ㅻ쪟 ?낆슜 ??遺?뺥븳 諛⑸쾿?쇰줈 ?ъ씤?몃? ?곷┰?????놁뒿?덈떎. ?뚯궗??遺???곷┰???뺤씤??寃쎌슦 ?ъ씤???뚯닔, ?뚯썝 ?먭꺽 ?뺤? 諛??곴뎄 ?덊눜 議곗튂瑜?痍⑦븷 ???덉쑝硫?誘셋룻삎?ъ긽??梨낆엫??臾쇱쓣 ???덉뒿?덈떎.</p>
-                    <p>???ъ씤?몄쓽 ?좏슚湲곌컙? ?곷┰?쇰줈遺??1?꾩씠硫? ?좏슚湲곌컙??寃쎄낵???ъ씤?몃뒗 ?쒖감?곸쑝濡??먮룞 ?뚮㈇?⑸땲?? ?뚯썝 ?덊눜 ???⑥븘?덈뒗 ?ъ씤?몃뒗 利됱떆 ?뚮㈇?섎?濡??ш??낇븯?붾씪??蹂듦뎄?섏? ?딆뒿?덈떎.</p>
+                    <h4 class="legal-subheading">제3조 (리워드 및 포인트 정책)</h4>
+                    <p>① 회원은 서비스 내 웹툰 퀴즈 정답, 이벤트 참여 등의 활동을 통해 회사에서 정한 기준에 따라 포인트(또는 리워드)를 적립 받을 수 있습니다.</p>
+                    <p>② 적립된 포인트는 회사가 정한 방법 및 제휴처에서 사용할 수 있으며, 현금 환급 가능 여부 및 비율은 서비스 내 별도 고지한 바에 따릅니다.</p>
+                    <p>③ (부정 적립 금지) 회원은 매크로 프로그램 사용, 타인의 명의 도용, 시스템 오류 악용 등 부정한 방법으로 포인트를 적립할 수 없습니다. 회사는 부정 적립이 확인된 경우 포인트 회수, 회원 자격 정지 및 영구 탈퇴 조치를 취할 수 있으며 민·형사상의 책임을 물을 수 있습니다.</p>
+                    <p>④ 포인트의 유효기간은 적립일로부터 1년이며, 유효기간이 경과한 포인트는 순차적으로 자동 소멸됩니다. 회원 탈퇴 시 남아있는 포인트는 즉시 소멸되므로 재가입하더라도 복구되지 않습니다.</p>
                 </section>
                 <section class="legal-section">
-                    <h4 class="legal-subheading">??議?(?뚯썝??寃뚯떆臾?諛??댁쫰 ??묎텒)</h4>
-                    <p>???뚯썝???쒕퉬???댁뿉??吏곸젒 ?앹꽦?섍퀬 異쒖젣???뱁댆 ?댁쫰 諛?愿??肄섑뀗痢좎뿉 ?????묎텒(2李⑥쟻 ??묐Ъ ?묒꽦沅??ы븿) 諛?紐⑤뱺 吏?앹옱?곌텒? ?뚯궗(?꾨젅?쒕?????洹?띾맗?덈떎.</p>
-                    <p>???뚯썝???쒕퉬???댁뿉 ?묒꽦??由щ럭, 而ㅻ??덊떚 寃뚯떆湲 ???쇰컲 寃뚯떆臾쇱쓽 ??묎텒? ?대떦 ?뚯썝?먭쾶 洹?띾맗?덈떎. ?ㅻ쭔, ?뚯궗???대? ?쒕퉬?ㅼ쓽 ?꾨줈紐⑥뀡, ?댁쁺, ?쒕퉬??媛쒖꽑 諛?留덉???紐⑹쟻?쇰줈 ?ъ슜?????덈뒗 臾댁긽??鍮꾨룆?먯쟻 ?ъ슜沅뚯쓣 媛吏묐땲??</p>
-                    <p>???뚯썝??寃뚯떆臾쇱씠???댁쫰媛 ??몄쓽 吏?앹옱?곌텒??移⑦빐?섍굅??愿??踰뺣졊???꾨컲?섎뒗 寃쎌슦, ?뚯궗???ъ쟾 ?듬낫 ?놁씠 ?대? ??젣?섍굅???몄텧???쒗븳?????덉쑝硫? ?대줈 ?명빐 諛쒖깮?섎뒗 紐⑤뱺 踰뺤쟻 梨낆엫? ?대떦 ?뚯썝??遺?댄빀?덈떎.</p>
+                    <h4 class="legal-subheading">제4조 (회원의 게시물 및 퀴즈 저작권)</h4>
+                    <p>① 회원이 서비스 내에서 직접 생성하고 출제한 웹툰 퀴즈 및 관련 콘텐츠에 대한 저작권(2차적 저작물 작성권 포함) 및 모든 지식재산권은 회사(프레시밀크)에 귀속됩니다.</p>
+                    <p>② 회원이 서비스 내에 작성한 리뷰, 커뮤니티 게시글 등 일반 게시물의 저작권은 해당 회원에게 귀속됩니다. 다만, 회사는 이를 서비스의 프로모션, 운영, 서비스 개선 및 마케팅 목적으로 사용할 수 있는 무상의 비독점적 사용권을 가집니다.</p>
+                    <p>③ 회원의 게시물이나 퀴즈가 타인의 지식재산권을 침해하거나 관련 법령을 위반하는 경우, 회사는 사전 통보 없이 이를 삭제하거나 노출을 제한할 수 있으며, 이로 인해 발생하는 모든 법적 책임은 해당 회원이 부담합니다.</p>
                 </section>
                 <section class="legal-section">
-                    <h4 class="legal-subheading">??議?(?쒕퉬?ㅼ쓽 蹂寃?諛?以묒?)</h4>
-                    <p>?뚯궗???댁쁺?? 湲곗닠?곸쓽 ?꾩슂???곕씪 ?쒓났?섍퀬 ?덈뒗 ?쒕퉬?ㅻ? 蹂寃쏀븯嫄곕굹 以묐떒?????덉쑝硫? ??寃쎌슦 ?ъ쟾??怨듭??ы빆???듯빐 ?덈궡?⑸땲?? ?? 由ъ썙???뺤콉 ???뚯썝??沅뚮━??以묐????곹뼢??誘몄튂??蹂寃쎌? 理쒖냼 30???꾩뿉 ?듭??⑸땲??</p>
+                    <h4 class="legal-subheading">제5조 (서비스의 변경 및 중지)</h4>
+                    <p>회사는 운영상, 기술상의 필요에 따라 제공하고 있는 서비스를 변경하거나 중단할 수 있으며, 이 경우 사전에 공지사항을 통해 안내합니다. 단, 리워드 정책 등 회원의 권리에 중대한 영향을 미치는 변경은 최소 30일 전에 통지합니다.</p>
                 </section>
             </div>
             <div class="modal-actions modal-actions--single">
-                <button type="button" class="btn-modal btn-modal-primary" id="modalTermsClose">?リ린</button>
+                <button type="button" class="btn-modal btn-modal-primary" id="modalTermsClose">닫기</button>
             </div>
         </div>
     </dialog>
 
     <dialog id="modal-privacy" class="modal modal--legal" aria-labelledby="modal-privacy-title">
         <div class="modal-inner modal-inner--legal">
-            <h2 id="modal-privacy-title" class="modal-title">?ㅽ넗由?Storit) 媛쒖씤?뺣낫 泥섎━諛⑹묠</h2>
+            <h2 id="modal-privacy-title" class="modal-title">스토릿(Storit) 개인정보 처리방침</h2>
             <div class="modal-legal-body">
                 <section class="legal-section">
-                    <h4 class="legal-subheading">1. ?섏쭛?섎뒗 媛쒖씤?뺣낫????ぉ 諛??섏쭛 諛⑸쾿</h4>
-                    <p>?뚯궗???뚯뀥 濡쒓렇??諛??쒕퉬???쒓났???꾪빐 ?꾨옒??媛쒖씤?뺣낫瑜??섏쭛?⑸땲??</p>
+                    <h4 class="legal-subheading">1. 수집하는 개인정보의 항목 및 수집 방법</h4>
+                    <p>회사는 소셜 로그인 및 서비스 제공을 위해 아래의 개인정보를 수집합니다.</p>
                     <ul class="legal-list">
-                        <li><strong>媛????(?뚯뀥 ?곕룞):</strong> ?대찓??二쇱냼, ?됰꽕?? ?꾨줈???ъ쭊</li>
-                        <li><strong>由ъ썙???ъ슜 諛??섍툒 ??(?꾩슂 ??:</strong> 蹂몄씤?몄쬆 ?뺣낫(CI/DI), ?대??꾪솕 踰덊샇, ???怨꾩쥖踰덊샇</li>
-                        <li><strong>?먮룞 ?섏쭛 ??ぉ:</strong> ?쒕퉬???댁슜湲곕줉(?댁쫰 李몄뿬 ?대젰, 由ъ썙???곷┰/?ъ슜 ?댁뿭, 由щ럭 諛?而ㅻ??덊떚 ?쒕룞, 湲몃뱶 ?쒕룞 ?뺣낫), ?묒냽 濡쒓렇, IP 二쇱냼, 遺덈웾 ?댁슜 湲곕줉</li>
-                        <li><strong>留?14??誘몃쭔 ?꾨룞 媛????</strong> 踰뺤젙?由ъ씤???뺣낫 (?대쫫, ?곕씫泥? ?숈쓽 ?섏궗 ?뺤씤 湲곕줉)</li>
+                        <li><strong>가입 시 (소셜 연동):</strong> 이메일 주소, 닉네임, 프로필 사진</li>
+                        <li><strong>리워드 사용 및 환급 시 (필요 시):</strong> 본인인증 정보(CI/DI), 휴대전화 번호, 은행 계좌번호</li>
+                        <li><strong>자동 수집 항목:</strong> 서비스 이용기록(퀴즈 참여 이력, 리워드 적립/사용 내역, 리뷰 및 커뮤니티 활동, 길드 활동 정보), 접속 로그, IP 주소, 불량 이용 기록</li>
+                        <li><strong>만 14세 미만 아동 가입 시:</strong> 법정대리인의 정보 (이름, 연락처, 동의 의사 확인 기록)</li>
                     </ul>
                 </section>
                 <section class="legal-section">
-                    <h4 class="legal-subheading">2. 媛쒖씤?뺣낫???섏쭛 諛??댁슜 紐⑹쟻</h4>
+                    <h4 class="legal-subheading">2. 개인정보의 수집 및 이용 목적</h4>
                     <ul class="legal-list">
-                        <li><strong>?뚯썝 愿由?</strong> ?뚯뀥 怨꾩젙???듯븳 蹂몄씤 ?앸퀎, 遺덈웾 ?뚯썝??遺???댁슜 諛⑹?, 留?14??誘몃쭔 ?꾨룞 ?뺤씤 諛?踰뺤젙?由ъ씤 ?숈쓽 ?щ? ?뺤씤</li>
-                        <li><strong>?쒕퉬??諛?由ъ썙???쒓났:</strong> ?뱁댆 ?댁쫰 ?쒕퉬???쒓났, 由ъ썙???ъ씤?? ?곷┰ 諛??뺤궛, 留욎땄??肄섑뀗痢??쒓났</li>
-                        <li><strong>?좉퇋 ?쒕퉬??諛?留덉???</strong> ?좉퇋 湲곕뒫(而ㅻ??덊떚, 湲몃뱶 ?? 媛쒕컻???꾪븳 ?듦퀎 遺꾩꽍, ?대깽??諛?愿묎퀬???뺣낫 ?쒓났(?숈쓽??寃쎌슦???쒗븿)</li>
+                        <li><strong>회원 관리:</strong> 소셜 계정을 통한 본인 식별, 불량 회원의 부정 이용 방지, 만 14세 미만 아동 확인 및 법정대리인 동의 여부 확인</li>
+                        <li><strong>서비스 및 리워드 제공:</strong> 웹툰 퀴즈 서비스 제공, 리워드(포인트) 적립 및 정산, 맞춤형 콘텐츠 제공</li>
+                        <li><strong>신규 서비스 및 마케팅:</strong> 신규 기능(커뮤니티, 길드 등) 개발을 위한 통계 분석, 이벤트 및 광고성 정보 제공(동의한 경우에 한함)</li>
                     </ul>
                 </section>
                 <section class="legal-section">
-                    <h4 class="legal-subheading">3. 媛쒖씤?뺣낫??蹂댁쑀 諛??댁슜 湲곌컙</h4>
-                    <p>?먯튃?곸쑝濡??뚯썝 ?덊눜 ???먮뒗 媛쒖씤?뺣낫 ?섏쭛 諛??댁슜 紐⑹쟻???ъ꽦???꾩뿉???대떦 ?뺣낫瑜?吏泥??놁씠 ?뚭린?⑸땲?? ?? 遺?뺤씠??諛??대럭吏?諛⑹?瑜??꾪빐 ?덊눜 ?꾩뿉??6媛쒖썡媛?理쒖냼?쒖쓽 ?앸퀎 ?뺣낫(?덊눜 湲곕줉 諛?遺덈웾 ?댁슜 湲곕줉)瑜?蹂닿??????덉쑝硫? 愿??踰뺣졊???곕씪 蹂댁〈???섎Т媛 ?덈뒗 寃쎌슦 ?꾨옒? 媛숈씠 蹂닿??⑸땲??</p>
+                    <h4 class="legal-subheading">3. 개인정보의 보유 및 이용 기간</h4>
+                    <p>원칙적으로 회원 탈퇴 시 또는 개인정보 수집 및 이용 목적이 달성된 후에는 해당 정보를 지체 없이 파기합니다. 단, 부정이용 및 어뷰징 방지를 위해 탈퇴 후에도 6개월간 최소한의 식별 정보(탈퇴 기록 및 불량 이용 기록)를 보관할 수 있으며, 관련 법령에 따라 보존할 의무가 있는 경우 아래와 같이 보관합니다.</p>
                     <ul class="legal-list">
-                        <li>?꾩옄?곴굅???깆뿉?쒖쓽 ?뚮퉬?먮낫?몄뿉 愿??踰뺣쪧???곕Ⅸ ?湲덇껐??諛??ы솕 ?깆쓽 怨듦툒??愿??湲곕줉: 5??/li>
+                        <li>전자상거래 등에서의 소비자보호에 관한 법률에 따른 대금결제 및 재화 등의 공급에 관한 기록: 5년</li>
                     </ul>
                 </section>
                 <section class="legal-section">
-                    <h4 class="legal-subheading">4. 媛쒖씤?뺣낫???뚭린 ?덉감 諛?諛⑸쾿</h4>
-                    <p><strong>?뚭린 ?덉감:</strong> 紐⑹쟻???ъ꽦??媛쒖씤?뺣낫???대? 諛⑹묠 諛?湲고? 愿??踰뺣졊???섑븳 ?뺣낫蹂댄샇 ?ъ쑀???곕씪 ?쇱젙 湲곌컙 ??λ맂 ???뚭린?⑸땲??</p>
-                    <p><strong>?뚭린 諛⑸쾿:</strong> ?꾩옄???뚯씪 ?뺥깭濡???λ맂 媛쒖씤?뺣낫??湲곕줉???ъ깮?????녿뒗 湲곗닠??諛⑸쾿???ъ슜?섏뿬 ?꾩쟾????젣?⑸땲??</p>
+                    <h4 class="legal-subheading">4. 개인정보의 파기 절차 및 방법</h4>
+                    <p><strong>파기 절차:</strong> 목적이 달성된 개인정보는 내부 방침 및 기타 관련 법령에 의한 정보보호 사유에 따라 일정 기간 저장된 후 파기됩니다.</p>
+                    <p><strong>파기 방법:</strong> 전자적 파일 형태로 저장된 개인정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 완전히 삭제합니다.</p>
                 </section>
                 <section class="legal-section">
-                    <h4 class="legal-subheading">5. ?댁슜??諛?踰뺤젙?由ъ씤??沅뚮━? ?됱궗 諛⑸쾿</h4>
-                    <p>?댁슜??諛?留?14??誘몃쭔 ?꾨룞??踰뺤젙?由ъ씤? ?몄젣?좎? ?깅줉?섏뼱 ?덈뒗 ?먯떊 ?뱀? ?뱁빐 ?꾨룞??媛쒖씤?뺣낫瑜?議고쉶?섍굅???섏젙?????덉쑝硫? ?숈쓽 泥좏쉶(?뚯썝 ?덊눜)瑜??붿껌?????덉뒿?덈떎.</p>
-                    <p>?대떦 沅뚮━???쒕퉬?????ㅼ젙/留덉씠?섏씠吏 硫붾돱 ?먮뒗 媛쒖씤?뺣낫 蹂댄샇梨낆엫?먯뿉寃??쒕㈃, ?대찓???깆쓣 ?듯빐 ?됱궗?섏떎 ???덉뒿?덈떎.</p>
+                    <h4 class="legal-subheading">5. 이용자 및 법정대리인의 권리와 행사 방법</h4>
+                    <p>이용자 및 만 14세 미만 아동의 법정대리인은 언제든지 등록되어 있는 자신 혹은 당해 아동의 개인정보를 조회하거나 수정할 수 있으며, 동의 철회(회원 탈퇴)를 요청할 수 있습니다.</p>
+                    <p>해당 권리는 서비스 내 설정/마이페이지 메뉴 또는 개인정보 보호책임자에게 서면, 이메일 등을 통해 행사하실 수 있습니다.</p>
                 </section>
                 <section class="legal-section">
-                    <h4 class="legal-subheading">6. 媛쒖씤?뺣낫 蹂댄샇梨낆엫??/h4>
-                    <p>?뚯궗??媛쒖씤?뺣낫 泥섎━??愿???낅Т瑜?珥앷큵?댁꽌 梨낆엫吏怨? 媛쒖씤?뺣낫 泥섎━? 愿?⑦븳 ?댁슜?먯쓽 遺덈쭔 泥섎━ 諛??쇳빐 援ъ젣瑜??꾪븯???꾨옒? 媛숈씠 媛쒖씤?뺣낫 蹂댄샇梨낆엫?먮? 吏?뺥븯怨??덉뒿?덈떎.</p>
+                    <h4 class="legal-subheading">6. 개인정보 보호책임자</h4>
+                    <p>회사는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 이용자의 불만 처리 및 피해 구제를 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.</p>
                     <ul class="legal-list">
-                        <li><strong>?대떦??</strong> 源?숈떊</li>
-                        <li><strong>?대찓??</strong> <a href="mailto:kdshin@freshmilk.kr">kdshin@freshmilk.kr</a></li>
+                        <li><strong>담당자:</strong> 김동신</li>
+                        <li><strong>이메일:</strong> <a href="mailto:kdshin@freshmilk.kr">kdshin@freshmilk.kr</a></li>
                     </ul>
                 </section>
             </div>
             <div class="modal-actions modal-actions--single">
-                <button type="button" class="btn-modal btn-modal-primary" id="modalPrivacyClose">?リ린</button>
+                <button type="button" class="btn-modal btn-modal-primary" id="modalPrivacyClose">닫기</button>
             </div>
         </div>
     </dialog>
