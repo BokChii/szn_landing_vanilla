@@ -18,7 +18,7 @@ vanilla/
 │   ├── config.example.js  # Supabase 설정 예시
 │   └── config.js     # 로컬 또는 빌드 생성 (git에 포함하지 않음)
 ├── assets/             # 이미지 파일들
-│   ├── storit_logo_png.png
+│   ├── storit_logo.png
 │   ├── main.png
 │   ├── quiz.png
 │   ├── rank.png
