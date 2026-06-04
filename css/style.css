@@ -1866,12 +1866,69 @@ dialog.modal.modal--legal[open] {
 .footer-divider {
     border-top: 1px solid var(--color-gray-800);
     width: 100%;
-    max-width: 20rem;
-    margin: 1.5rem 0;
+    max-width: 36rem;
+    margin: 0.5rem 0;
+}
+
+.footer-company {
+    width: 100%;
+    max-width: 36rem;
+    text-align: left;
+}
+
+.footer-company-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: 0.35rem;
+}
+
+.footer-company-tagline {
+    font-size: 0.8125rem;
+    color: var(--color-gray-400);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+}
+
+.footer-business {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+
+.footer-business-row {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.25rem 0.75rem;
+    align-items: start;
+}
+
+.footer-business-row dt {
+    color: var(--color-gray-500);
+    font-weight: 600;
+    margin: 0;
+}
+
+.footer-business-row dd {
+    color: var(--color-gray-300);
+    margin: 0;
 }
 
 .footer-copyright {
     font-size: 0.75rem;
+    line-height: 1.6;
+    max-width: 36rem;
+}
+
+.footer-updated {
+    font-size: 0.6875rem;
+    color: var(--color-gray-500);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: -0.5rem;
 }
 
 /* Webtoon personality quiz modal */
