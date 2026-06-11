@@ -111,7 +111,6 @@ vanilla/
 `index.html` 파일에서 직접 링크를 수정할 수 있습니다:
 - Instagram: `footer-social` 섹션
 - Email: `mailto:szn.helpdesk@gmail.com`
-- 웹 서비스: `cta-web-link` 클래스
 
 ## 배포
 
