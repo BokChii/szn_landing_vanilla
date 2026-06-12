@@ -11,6 +11,8 @@ vanilla/
 ├── vercel.json         # buildCommand / outputDirectory
 ├── scripts/
 │   └── write-supabase-config.mjs  # 환경 변수 → js/config.js
+├── api/
+│   └── sync-notion.mjs     # Supabase Webhook → Notion `등록` 갱신
 ├── css/
 │   └── style.css       # 모든 스타일 (Tailwind 없이 순수 CSS)
 ├── js/
@@ -72,6 +74,44 @@ vanilla/
    - (선택) `PREORDER_TABLE` — 기본값 `pre_registrations`
 2. **Production**(및 필요 시 Preview)에 체크한 뒤 저장하고 재배포합니다.
 3. 배포 시 `npm run build`가 `scripts/write-supabase-config.mjs`를 실행해 **`js/config.js`를 생성**합니다. 프리뷰/미리보기에서도 사전 예약을 쓰려면 Preview 환경에 동일 변수를 넣어야 합니다.
+
+### Notion 광고 현황 연동 (`등록` 자동 갱신)
+
+사전 예약이 Supabase에 저장되면 Vercel API가 **당일(KST) 등록 수**를 다시 세어 Notion **광고 현황** DB의 `등록` 숫자를 업데이트합니다.
+
+#### Vercel 환경 변수 (추가)
+
+| 변수 | 설명 |
+|------|------|
+| `NOTION_TOKEN` | Notion Integration 토큰 (`ntn_...` 또는 `secret_...`) |
+| `NOTION_DATABASE_ID` | 광고 현황 DB ID (32자) 또는 Notion DB URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase **service_role** 키 (등록 수 COUNT용, **절대 프론트에 노출 금지**) |
+| `SUPABASE_WEBHOOK_SECRET` | (권장) Webhook 인증용 임의 문자열 |
+
+기존 `SUPABASE_URL`, `PREORDER_TABLE`도 API에서 사용합니다.
+
+#### Supabase Database Webhook 설정
+
+1. Supabase Dashboard → **Database → Webhooks → Create a new hook**
+2. **Table:** `pre_registrations` / **Events:** `INSERT`만 선택
+3. **Type:** HTTP Request
+4. **URL:** `https://<your-vercel-domain>/api/sync-notion`
+5. **HTTP Headers** (권장):
+   - `Authorization`: `Bearer <SUPABASE_WEBHOOK_SECRET>` (Vercel env와 동일한 값)
+6. 저장 후 Vercel **재배포** (환경 변수 반영)
+
+#### Notion 쪽 준비
+
+- **광고 현황** DB에 Integration 연결
+- 광고일마다 `일시` 행을 미리 만듭니다 (예: `06.12` — `MM.DD` 형식)
+- 해당 행이 없으면 API는 404를 반환하고 Notion은 갱신되지 않습니다
+
+#### 동작 요약
+
+```
+사전등록 INSERT → Supabase Webhook → /api/sync-notion
+  → KST 기준 그날 COUNT → Notion `일시` 행의 `등록` 업데이트
+```
 
 ### 접속
 
