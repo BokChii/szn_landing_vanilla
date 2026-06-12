@@ -19,36 +19,38 @@ function parseDatabaseId(raw) {
     return match[1].replace(/-/g, '');
 }
 
-function getKstDateParts(isoString) {
+function getKstRegistrationFields(isoString) {
     const date = new Date(isoString);
     if (Number.isNaN(date.getTime())) {
         throw new Error(`Invalid created_at: ${isoString}`);
     }
 
-    const parts = new Intl.DateTimeFormat('en-US', {
+    const dateParts = new Intl.DateTimeFormat('en-US', {
         timeZone: TIMEZONE,
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
     }).formatToParts(date);
 
-    const year = parts.find((part) => part.type === 'year')?.value;
-    const month = parts.find((part) => part.type === 'month')?.value;
-    const day = parts.find((part) => part.type === 'day')?.value;
+    const year = dateParts.find((part) => part.type === 'year')?.value;
+    const month = dateParts.find((part) => part.type === 'month')?.value;
+    const day = dateParts.find((part) => part.type === 'day')?.value;
 
-    return { year, month, day, dateLabel: `${month}.${day}` };
-}
+    const timeParts = new Intl.DateTimeFormat('en-US', {
+        timeZone: TIMEZONE,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+    }).formatToParts(date);
 
-function getKstDayBounds(isoString) {
-    const { year, month, day, dateLabel } = getKstDateParts(isoString);
-    const start = new Date(`${year}-${month}-${day}T00:00:00+09:00`);
-    const end = new Date(start);
-    end.setUTCDate(end.getUTCDate() + 1);
+    const hour = timeParts.find((part) => part.type === 'hour')?.value;
+    const minute = timeParts.find((part) => part.type === 'minute')?.value;
+    const second = timeParts.find((part) => part.type === 'second')?.value;
 
     return {
-        dateLabel,
-        startIso: start.toISOString(),
-        endIso: end.toISOString(),
+        dateLabel: `${month}.${day}`,
+        registeredAt: `${year}-${month}-${day}T${hour}:${minute}:${second}+09:00`,
     };
 }
 
@@ -64,47 +66,14 @@ function isAuthorized(req) {
     return false;
 }
 
-async function countRegistrationsForDay({ startIso, endIso, tableName }) {
-    const supabaseUrl = readEnv('SUPABASE_URL');
-    const serviceRoleKey = readEnv('SUPABASE_SERVICE_ROLE_KEY');
-
-    if (!supabaseUrl || !serviceRoleKey) {
-        throw new Error('SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required');
-    }
-
-    const params = new URLSearchParams({
-        select: 'id',
-        created_at: `gte.${startIso}`,
-    });
-    params.append('created_at', `lt.${endIso}`);
-
-    const response = await fetch(`${supabaseUrl}/rest/v1/${tableName}?${params.toString()}`, {
-        method: 'GET',
-        headers: {
-            apikey: serviceRoleKey,
-            Authorization: `Bearer ${serviceRoleKey}`,
-            Prefer: 'count=exact',
-        },
-    });
-
-    if (!response.ok) {
-        const body = await response.text();
-        throw new Error(`Supabase count failed (${response.status}): ${body}`);
-    }
-
-    const contentRange = response.headers.get('content-range') || '';
-    const total = contentRange.split('/')[1];
-    const count = Number.parseInt(total, 10);
-
-    if (Number.isNaN(count)) {
-        throw new Error(`Unexpected Supabase count response: ${contentRange}`);
-    }
-
-    return count;
-}
-
-async function findNotionPageByDate(databaseId, dateLabel, notionToken) {
-    const response = await fetch(`https://api.notion.com/v1/databases/${databaseId}/query`, {
+async function createNotionRegistrationRow({
+    databaseId,
+    notionToken,
+    dateLabel,
+    email,
+    registeredAt,
+}) {
+    const response = await fetch('https://api.notion.com/v1/pages', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${notionToken}`,
@@ -112,37 +81,20 @@ async function findNotionPageByDate(databaseId, dateLabel, notionToken) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            page_size: 1,
-            filter: {
-                property: '일시',
-                title: {
-                    equals: dateLabel,
-                },
+            parent: {
+                database_id: databaseId,
             },
-        }),
-    });
-
-    if (!response.ok) {
-        const body = await response.text();
-        throw new Error(`Notion query failed (${response.status}): ${body}`);
-    }
-
-    const data = await response.json();
-    return data.results?.[0] || null;
-}
-
-async function updateNotionRegistration(pageId, count, notionToken) {
-    const response = await fetch(`https://api.notion.com/v1/pages/${pageId}`, {
-        method: 'PATCH',
-        headers: {
-            Authorization: `Bearer ${notionToken}`,
-            'Notion-Version': NOTION_VERSION,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
             properties: {
-                등록: {
-                    number: count,
+                일시: {
+                    title: [{ text: { content: dateLabel } }],
+                },
+                '등록(Email)': {
+                    email,
+                },
+                등록일시: {
+                    date: {
+                        start: registeredAt,
+                    },
                 },
             },
         }),
@@ -150,7 +102,7 @@ async function updateNotionRegistration(pageId, count, notionToken) {
 
     if (!response.ok) {
         const body = await response.text();
-        throw new Error(`Notion update failed (${response.status}): ${body}`);
+        throw new Error(`Notion create failed (${response.status}): ${body}`);
     }
 
     return response.json();
@@ -192,33 +144,30 @@ export default async function handler(req, res) {
 
     const record = payload.record || payload;
     const createdAt = record.created_at;
+    const email = (record.email || '').trim();
 
     if (!createdAt) {
         return res.status(400).json({ error: 'Missing record.created_at' });
     }
 
+    if (!email) {
+        return res.status(400).json({ error: 'Missing record.email' });
+    }
+
     try {
-        const dayBounds = getKstDayBounds(createdAt);
-        const count = await countRegistrationsForDay({
-            ...dayBounds,
-            tableName,
+        const { dateLabel, registeredAt } = getKstRegistrationFields(createdAt);
+        const page = await createNotionRegistrationRow({
+            databaseId,
+            notionToken,
+            dateLabel,
+            email,
+            registeredAt,
         });
-
-        const page = await findNotionPageByDate(databaseId, dayBounds.dateLabel, notionToken);
-        if (!page) {
-            return res.status(404).json({
-                error: `No Notion row found for 일시=${dayBounds.dateLabel}`,
-                dateLabel: dayBounds.dateLabel,
-                count,
-            });
-        }
-
-        await updateNotionRegistration(page.id, count, notionToken);
 
         return res.status(200).json({
             ok: true,
-            dateLabel: dayBounds.dateLabel,
-            count,
+            dateLabel,
+            email,
             pageId: page.id,
         });
     } catch (error) {
