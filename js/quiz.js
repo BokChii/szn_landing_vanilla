@@ -256,7 +256,13 @@ async function shareOutcome(r) {
         }, 2500);
     };
 
-    if (navigator.share) {
+    const isMobileUa =
+        navigator.userAgentData && typeof navigator.userAgentData.mobile === 'boolean'
+            ? navigator.userAgentData.mobile
+            : /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+    const canNativeShare = typeof navigator.share === 'function' && isMobileUa;
+
+    if (canNativeShare) {
         try {
             await navigator.share({
                 title: '스토릿 웹툰 성향 테스트',

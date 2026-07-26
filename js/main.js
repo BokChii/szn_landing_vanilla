@@ -240,6 +240,15 @@ function wirePreorderModals() {
     });
 }
 
+/** Native share sheet is preferred on phones; desktop Chrome/Edge also expose navigator.share. */
+function canUseNativeShare() {
+    if (typeof navigator.share !== 'function') return false;
+    if (navigator.userAgentData && typeof navigator.userAgentData.mobile === 'boolean') {
+        return navigator.userAgentData.mobile;
+    }
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+}
+
 function wirePreorderShare() {
     const btn = document.getElementById('preorderShare');
     const toast = document.getElementById('preorderShareToast');
@@ -259,7 +268,7 @@ function wirePreorderShare() {
         const url = `${window.location.origin}${window.location.pathname}?utm_source=share&utm_medium=referral&utm_campaign=landing_preorder`;
         const text = `웹툰 퀴즈로 리워드 받는 앱 '스토릿' 출시 준비 중이야!\n사전 예약하고 같이 기다리자.\n${url}`;
 
-        if (navigator.share) {
+        if (canUseNativeShare()) {
             try {
                 await navigator.share({
                     title: '스토릿 사전 예약',
