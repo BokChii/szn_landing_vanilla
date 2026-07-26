@@ -1,3 +1,4 @@
+import { trackEvent } from './analytics.js';
 import quizData from './quiz-data.js';
 
 const TIE_ORDER = ['martial_arts', 'fantasy', 'thriller', 'action', 'romance', 'slice'];
@@ -137,6 +138,7 @@ function render() {
             </div>
         `;
         rootEl.querySelector('#quizBtnStart')?.addEventListener('click', () => {
+            trackEvent('quiz_start');
             scores = emptyScores();
             phase = 0;
             render();
@@ -228,6 +230,7 @@ function render() {
             if (qi + 1 >= total) {
                 resultKey = pickWinner();
                 phase = 'result';
+                trackEvent('quiz_complete', { genre: resultKey });
             } else {
                 phase = qi + 1;
             }
@@ -237,6 +240,7 @@ function render() {
 }
 
 async function shareOutcome(r) {
+    trackEvent('quiz_share', { genre: resultKey });
     const url = shareUrl();
     const text = `【${r.title}】\n${r.sub_title}\n\n스토릿 웹툰 성향 테스트 해보기: ${url}`;
     const toast = rootEl?.querySelector('#quizToast');
@@ -272,12 +276,16 @@ async function shareOutcome(r) {
     }
 }
 
-function openQuiz() {
+/**
+ * @param {string} [source]
+ */
+function openQuiz(source = 'unknown') {
     closeMenuIfOpen();
     scores = emptyScores();
     phase = 'intro';
     resultKey = '';
     if (!dialogEl || !rootEl) return;
+    trackEvent('quiz_open', { source });
     render();
     if (!dialogEl.open) dialogEl.showModal();
 }
@@ -303,15 +311,20 @@ export function initQuiz(options = {}) {
         if (e.target === dialogEl) dialogEl.close();
     });
 
-    const openers = ['heroOpenQuiz', 'teaserOpenQuiz', 'menuOpenQuiz', 'headerOpenQuiz'];
-    for (const id of openers) {
-        document.getElementById(id)?.addEventListener('click', () => openQuiz());
+    const openers = [
+        ['heroOpenQuiz', 'hero'],
+        ['teaserOpenQuiz', 'teaser'],
+        ['menuOpenQuiz', 'menu'],
+        ['headerOpenQuiz', 'header'],
+    ];
+    for (const [id, source] of openers) {
+        document.getElementById(id)?.addEventListener('click', () => openQuiz(source));
     }
 
     window.addEventListener('hashchange', () => {
-        if (window.location.hash === '#webtoon-test') openQuiz();
+        if (window.location.hash === '#webtoon-test') openQuiz('hash');
     });
     if (window.location.hash === '#webtoon-test') {
-        queueMicrotask(() => openQuiz());
+        queueMicrotask(() => openQuiz('hash'));
     }
 }

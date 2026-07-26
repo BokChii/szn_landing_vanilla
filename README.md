@@ -72,6 +72,7 @@ vanilla/
    - `SUPABASE_URL` — Supabase Project URL
    - `SUPABASE_ANON_KEY` — anon public 키
    - (선택) `PREORDER_TABLE` — 기본값 `pre_registrations`
+   - (선택) `GA_MEASUREMENT_ID` — GA4 측정 ID (`G-XXXXXXXXXX`). 없으면 Google Analytics는 로드되지 않습니다.
 2. **Production**(및 필요 시 Preview)에 체크한 뒤 저장하고 재배포합니다.
 3. 배포 시 `npm run build`가 `scripts/write-supabase-config.mjs`를 실행해 **`js/config.js`를 생성**합니다. 프리뷰/미리보기에서도 사전 예약을 쓰려면 Preview 환경에 동일 변수를 넣어야 합니다.
 

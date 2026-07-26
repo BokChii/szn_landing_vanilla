@@ -1,4 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { initGa } from './analytics.js';
 import { initQuiz } from './quiz.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -84,6 +85,7 @@ async function loadSupabaseFromConfig() {
         if (url && key) {
             supabase = createClient(url, key);
         }
+        initGa(mod.GA_MEASUREMENT_ID || '');
     } catch (e) {
         console.warn('Supabase config not loaded (add js/config.js from config.example.js):', e);
     }
