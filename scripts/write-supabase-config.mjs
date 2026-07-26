@@ -1,7 +1,7 @@
 /**
  * Writes js/config.js from environment variables (Vercel build / local CI).
  * Expected: SUPABASE_URL, SUPABASE_ANON_KEY
- * Optional: PREORDER_TABLE, QUIZ_EVENTS_TABLE, GA_MEASUREMENT_ID (G-XXXXXXXX)
+ * Optional: PREORDER_TABLE, QUIZ_EVENTS_TABLE, SHARE_EVENTS_TABLE, GA_MEASUREMENT_ID
  */
 import { writeFileSync, mkdirSync } from 'fs';
 import { dirname, join } from 'path';
@@ -16,6 +16,7 @@ const url = (process.env.SUPABASE_URL || '').trim();
 const key = (process.env.SUPABASE_ANON_KEY || '').trim();
 const table = (process.env.PREORDER_TABLE || 'pre_registrations').trim();
 const quizTable = (process.env.QUIZ_EVENTS_TABLE || 'quiz_events').trim();
+const shareTable = (process.env.SHARE_EVENTS_TABLE || 'share_events').trim();
 const gaId = (process.env.GA_MEASUREMENT_ID || '').trim();
 
 const isVercel = process.env.VERCEL === '1';
@@ -45,6 +46,7 @@ export const SUPABASE_URL = ${JSON.stringify(url)};
 export const SUPABASE_ANON_KEY = ${JSON.stringify(key)};
 export const PREORDER_TABLE = ${JSON.stringify(table)};
 export const QUIZ_EVENTS_TABLE = ${JSON.stringify(quizTable)};
+export const SHARE_EVENTS_TABLE = ${JSON.stringify(shareTable)};
 export const GA_MEASUREMENT_ID = ${JSON.stringify(gaId)};
 `;
 

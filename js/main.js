@@ -1,5 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import { initGa, initQuizLog } from './analytics.js';
+import { initGa, initQuizLog, trackEvent } from './analytics.js';
 import { initQuiz } from './quiz.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -7,6 +7,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 let supabase = null;
 let preorderTable = 'pre_registrations';
 let quizEventsTable = 'quiz_events';
+let shareEventsTable = 'share_events';
 
 let isScrolled = false;
 const header = document.getElementById('header');
@@ -84,11 +85,12 @@ async function loadSupabaseFromConfig() {
         const key = mod.SUPABASE_ANON_KEY;
         preorderTable = mod.PREORDER_TABLE || preorderTable;
         quizEventsTable = mod.QUIZ_EVENTS_TABLE || quizEventsTable;
+        shareEventsTable = mod.SHARE_EVENTS_TABLE || shareEventsTable;
         if (url && key) {
             supabase = createClient(url, key);
         }
         initGa(mod.GA_MEASUREMENT_ID || '');
-        initQuizLog({ supabase, table: quizEventsTable });
+        initQuizLog({ supabase, table: quizEventsTable, shareTable: shareEventsTable });
     } catch (e) {
         console.warn('Supabase config not loaded (add js/config.js from config.example.js):', e);
     }
@@ -265,6 +267,8 @@ function wirePreorderShare() {
     };
 
     btn.addEventListener('click', async () => {
+        trackEvent('preorder_share', { source: 'preorder' });
+
         const url = 'https://storit-landing.vercel.app/';
         const text = `웹툰 퀴즈로 리워드 받는 앱 '스토릿' 출시 준비 중이야!\n사전 예약하고 같이 기다리자.\n${url}`;
 

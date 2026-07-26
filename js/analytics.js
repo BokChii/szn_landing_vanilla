@@ -1,15 +1,17 @@
 /**
  * Dual tracking: GA4 (gtag) + Vercel Web Analytics (window.va).
- * Quiz funnel events are also persisted to Supabase when configured.
+ * Quiz / share funnel events are also persisted to Supabase when configured.
  */
 
 /** @type {import('@supabase/supabase-js').SupabaseClient | null} */
-let quizLogClient = null;
+let logClient = null;
 let quizLogTable = 'quiz_events';
+let shareLogTable = 'share_events';
 /** Anonymous id for one quiz attempt (open → complete/share). */
 let quizSessionId = '';
 
 const QUIZ_EVENTS = new Set(['quiz_open', 'quiz_start', 'quiz_complete', 'quiz_share']);
+const SHARE_EVENTS = new Set(['preorder_share']);
 
 /**
  * @param {string} measurementId GA4 Measurement ID (G-XXXXXXXX)
@@ -37,11 +39,16 @@ export function initGa(measurementId) {
 }
 
 /**
- * @param {{ supabase?: import('@supabase/supabase-js').SupabaseClient | null, table?: string }} options
+ * @param {{
+ *   supabase?: import('@supabase/supabase-js').SupabaseClient | null,
+ *   table?: string,
+ *   shareTable?: string,
+ * }} options
  */
 export function initQuizLog(options = {}) {
-    quizLogClient = options.supabase || null;
+    logClient = options.supabase || null;
     if (options.table) quizLogTable = options.table;
+    if (options.shareTable) shareLogTable = options.shareTable;
 }
 
 function newSessionId() {
@@ -62,7 +69,7 @@ export function beginQuizSession() {
 }
 
 /**
- * @param {string} name Event name (e.g. quiz_open)
+ * @param {string} name Event name (e.g. quiz_open, preorder_share)
  * @param {Record<string, string | number | boolean>} [params]
  */
 export function trackEvent(name, params = {}) {
@@ -92,6 +99,8 @@ export function trackEvent(name, params = {}) {
 
     if (QUIZ_EVENTS.has(name)) {
         void persistQuizEvent(name, payload);
+    } else if (SHARE_EVENTS.has(name)) {
+        void persistShareEvent(payload);
     }
 }
 
@@ -100,7 +109,7 @@ export function trackEvent(name, params = {}) {
  * @param {Record<string, string | number | boolean>} params
  */
 async function persistQuizEvent(name, params) {
-    if (!quizLogClient) return;
+    if (!logClient) return;
 
     const row = {
         event: name,
@@ -110,9 +119,27 @@ async function persistQuizEvent(name, params) {
     };
 
     try {
-        const { error } = await quizLogClient.from(quizLogTable).insert(row);
+        const { error } = await logClient.from(quizLogTable).insert(row);
         if (error) console.warn('[quiz_events]', error.message || error);
     } catch (e) {
         console.warn('[quiz_events]', e);
+    }
+}
+
+/**
+ * @param {Record<string, string | number | boolean>} params
+ */
+async function persistShareEvent(params) {
+    if (!logClient) return;
+
+    const row = {
+        source: typeof params.source === 'string' ? params.source : 'preorder',
+    };
+
+    try {
+        const { error } = await logClient.from(shareLogTable).insert(row);
+        if (error) console.warn('[share_events]', error.message || error);
+    } catch (e) {
+        console.warn('[share_events]', e);
     }
 }
