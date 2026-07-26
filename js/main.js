@@ -265,7 +265,7 @@ function wirePreorderShare() {
     };
 
     btn.addEventListener('click', async () => {
-        const url = `${window.location.origin}${window.location.pathname}?utm_source=share&utm_medium=referral&utm_campaign=landing_preorder`;
+        const url = 'https://storit-landing.vercel.app/';
         const text = `웹툰 퀴즈로 리워드 받는 앱 '스토릿' 출시 준비 중이야!\n사전 예약하고 같이 기다리자.\n${url}`;
 
         if (canUseNativeShare()) {
