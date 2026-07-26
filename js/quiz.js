@@ -1,4 +1,4 @@
-import { trackEvent } from './analytics.js';
+import { beginQuizSession, trackEvent } from './analytics.js';
 import quizData from './quiz-data.js';
 
 const TIE_ORDER = ['martial_arts', 'fantasy', 'thriller', 'action', 'romance', 'slice'];
@@ -181,6 +181,7 @@ function render() {
         `;
         rootEl.querySelector('#quizBtnShare')?.addEventListener('click', () => shareOutcome(r));
         rootEl.querySelector('#quizBtnAgain')?.addEventListener('click', () => {
+            beginQuizSession();
             scores = emptyScores();
             phase = 'intro';
             render();
@@ -285,6 +286,7 @@ function openQuiz(source = 'unknown') {
     phase = 'intro';
     resultKey = '';
     if (!dialogEl || !rootEl) return;
+    beginQuizSession();
     trackEvent('quiz_open', { source });
     render();
     if (!dialogEl.open) dialogEl.showModal();

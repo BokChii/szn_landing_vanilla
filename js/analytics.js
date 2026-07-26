@@ -6,6 +6,8 @@
 /** @type {import('@supabase/supabase-js').SupabaseClient | null} */
 let quizLogClient = null;
 let quizLogTable = 'quiz_events';
+/** Anonymous id for one quiz attempt (open → complete/share). */
+let quizSessionId = '';
 
 const QUIZ_EVENTS = new Set(['quiz_open', 'quiz_start', 'quiz_complete', 'quiz_share']);
 
@@ -42,6 +44,23 @@ export function initQuizLog(options = {}) {
     if (options.table) quizLogTable = options.table;
 }
 
+function newSessionId() {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+        return crypto.randomUUID();
+    }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        const r = (Math.random() * 16) | 0;
+        const v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
+}
+
+/** Start a new quiz attempt; returns the session id. */
+export function beginQuizSession() {
+    quizSessionId = newSessionId();
+    return quizSessionId;
+}
+
 /**
  * @param {string} name Event name (e.g. quiz_open)
  * @param {Record<string, string | number | boolean>} [params]
@@ -49,9 +68,15 @@ export function initQuizLog(options = {}) {
 export function trackEvent(name, params = {}) {
     if (!name) return;
 
+    const payload = { ...params };
+    if (QUIZ_EVENTS.has(name)) {
+        if (!quizSessionId) beginQuizSession();
+        payload.session_id = quizSessionId;
+    }
+
     try {
         if (typeof window.va === 'function') {
-            window.va('event', { name, data: params });
+            window.va('event', { name, data: payload });
         }
     } catch {
         /* ignore */
@@ -59,14 +84,14 @@ export function trackEvent(name, params = {}) {
 
     try {
         if (typeof window.gtag === 'function') {
-            window.gtag('event', name, params);
+            window.gtag('event', name, payload);
         }
     } catch {
         /* ignore */
     }
 
     if (QUIZ_EVENTS.has(name)) {
-        void persistQuizEvent(name, params);
+        void persistQuizEvent(name, payload);
     }
 }
 
@@ -79,6 +104,7 @@ async function persistQuizEvent(name, params) {
 
     const row = {
         event: name,
+        session_id: typeof params.session_id === 'string' ? params.session_id : null,
         source: typeof params.source === 'string' ? params.source : null,
         genre: typeof params.genre === 'string' ? params.genre : null,
     };

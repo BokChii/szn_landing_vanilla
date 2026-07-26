@@ -87,12 +87,23 @@ vanilla/
 2. Table Editor에서 `quiz_events`가 보이고, RLS로 anon **INSERT만** 허용되는지 확인합니다.
 3. 배포된 사이트에서 테스트를 한 뒤 행이 쌓이는지 확인합니다.
 
-| event | 의미 | 부가 컬럼 |
-|-------|------|-----------|
-| `quiz_open` | 모달 열림 | `source` (hero/header/teaser/menu/hash) |
-| `quiz_start` | 시작하기 | — |
-| `quiz_complete` | 결과 도달 | `genre` |
-| `quiz_share` | 공유 클릭 | `genre` |
+| 컬럼 / event | 의미 |
+|--------------|------|
+| `session_id` | 한 번의 참여 시도(모달 열기~다시하기)를 묶는 익명 UUID |
+| `quiz_open` | 모달 열림 + `source` (hero/header/teaser/menu/hash) |
+| `quiz_start` | 시작하기 |
+| `quiz_complete` | 결과 도달 + `genre` |
+| `quiz_share` | 공유 클릭 + `genre` |
+
+이미 테이블이 있으면 `supabase/quiz_events_add_session_id.sql`만 실행하세요.
+
+참여 수(완료 기준):
+
+```sql
+select count(distinct session_id)
+from quiz_events
+where event = 'quiz_complete' and session_id is not null;
+```
 
 ### Notion 사전등록 연동 (등록마다 새 행 추가)
 
