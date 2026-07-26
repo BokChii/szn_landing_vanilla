@@ -5,5 +5,7 @@
 export const SUPABASE_URL = 'https://YOUR_PROJECT_REF.supabase.co';
 export const SUPABASE_ANON_KEY = 'YOUR_ANON_PUBLIC_KEY';
 export const PREORDER_TABLE = 'pre_registrations';
+/** Quiz funnel log table (see supabase/quiz_events.sql) */
+export const QUIZ_EVENTS_TABLE = 'quiz_events';
 /** Optional. Example: 'G-XXXXXXXXXX' — leave '' to skip GA */
 export const GA_MEASUREMENT_ID = '';

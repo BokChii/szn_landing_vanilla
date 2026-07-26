@@ -13,6 +13,8 @@ vanilla/
 │   └── write-supabase-config.mjs  # 환경 변수 → js/config.js
 ├── api/
 │   └── sync-notion.mjs     # Supabase Webhook → Notion 사전등록 행 추가
+├── supabase/
+│   └── quiz_events.sql     # 성향 테스트 로그 테이블 + RLS
 ├── css/
 │   └── style.css       # 모든 스타일 (Tailwind 없이 순수 CSS)
 ├── js/
@@ -72,9 +74,25 @@ vanilla/
    - `SUPABASE_URL` — Supabase Project URL
    - `SUPABASE_ANON_KEY` — anon public 키
    - (선택) `PREORDER_TABLE` — 기본값 `pre_registrations`
+   - (선택) `QUIZ_EVENTS_TABLE` — 기본값 `quiz_events` (성향 테스트 로그)
    - (선택) `GA_MEASUREMENT_ID` — GA4 측정 ID (`G-XXXXXXXXXX`). 없으면 Google Analytics는 로드되지 않습니다.
 2. **Production**(및 필요 시 Preview)에 체크한 뒤 저장하고 재배포합니다.
 3. 배포 시 `npm run build`가 `scripts/write-supabase-config.mjs`를 실행해 **`js/config.js`를 생성**합니다. 프리뷰/미리보기에서도 사전 예약을 쓰려면 Preview 환경에 동일 변수를 넣어야 합니다.
+
+### 성향 테스트 로그 (Supabase)
+
+참여 퍼널은 GA4/Vercel과 별도로 Supabase `quiz_events` 테이블에 저장됩니다.
+
+1. Supabase Dashboard → **SQL Editor**에서 `supabase/quiz_events.sql` 내용을 실행합니다.
+2. Table Editor에서 `quiz_events`가 보이고, RLS로 anon **INSERT만** 허용되는지 확인합니다.
+3. 배포된 사이트에서 테스트를 한 뒤 행이 쌓이는지 확인합니다.
+
+| event | 의미 | 부가 컬럼 |
+|-------|------|-----------|
+| `quiz_open` | 모달 열림 | `source` (hero/header/teaser/menu/hash) |
+| `quiz_start` | 시작하기 | — |
+| `quiz_complete` | 결과 도달 | `genre` |
+| `quiz_share` | 공유 클릭 | `genre` |
 
 ### Notion 사전등록 연동 (등록마다 새 행 추가)
 

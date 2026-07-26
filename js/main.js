@@ -1,11 +1,12 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import { initGa } from './analytics.js';
+import { initGa, initQuizLog } from './analytics.js';
 import { initQuiz } from './quiz.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 let supabase = null;
 let preorderTable = 'pre_registrations';
+let quizEventsTable = 'quiz_events';
 
 let isScrolled = false;
 const header = document.getElementById('header');
@@ -82,10 +83,12 @@ async function loadSupabaseFromConfig() {
         const url = mod.SUPABASE_URL;
         const key = mod.SUPABASE_ANON_KEY;
         preorderTable = mod.PREORDER_TABLE || preorderTable;
+        quizEventsTable = mod.QUIZ_EVENTS_TABLE || quizEventsTable;
         if (url && key) {
             supabase = createClient(url, key);
         }
         initGa(mod.GA_MEASUREMENT_ID || '');
+        initQuizLog({ supabase, table: quizEventsTable });
     } catch (e) {
         console.warn('Supabase config not loaded (add js/config.js from config.example.js):', e);
     }
