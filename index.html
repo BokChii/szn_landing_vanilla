@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>스토릿 - 웹툰 퀴즈 리워드 플랫폼</title>
+    <meta name="description" content="매일 새로운 웹툰 퀴즈를 풀고 쿠키를 쌓아 보상을 받는 리워드 플랫폼, 스토릿. 사전 예약하고 출시 소식을 가장 먼저 받아보세요." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="스토릿" />
+    <meta property="og:title" content="스토릿 - 웹툰 퀴즈 리워드 플랫폼" />
+    <meta property="og:description" content="매일 새로운 웹툰 퀴즈로 쿠키를 쌓고 보상을 받아요. 지금 사전 예약 진행 중!" />
+    <meta property="og:url" content="https://sznlandingvanilla.vercel.app/" />
+    <meta property="og:image" content="https://sznlandingvanilla.vercel.app/assets/main.png" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="assets/storit_logo.png" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -425,6 +433,12 @@
                                 </button>
                             </form>
                             <p id="preorder-trust" class="preorder-hint">개인정보는 출시 알림 목적으로만 사용되며,<br> 언제든 수신 거부할 수 있어요.</p>
+
+                            <div class="preorder-share">
+                                <p class="preorder-share-lead">웹툰 좋아하는 친구와 함께 기다리면 더 재밌어요.</p>
+                                <button type="button" class="btn-preorder-share" id="preorderShare">친구에게 링크 공유하기</button>
+                                <p class="preorder-share-toast" id="preorderShareToast" role="status" aria-live="polite" hidden></p>
+                            </div>
                         </div>
                         
                         <p class="store-coming-soon">모바일 앱은 정식 오픈과 함께<br> App Store · Google Play에서 만나요.</p>

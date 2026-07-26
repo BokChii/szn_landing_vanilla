@@ -1544,6 +1544,59 @@ body {
     line-height: 1.55;
 }
 
+.preorder-share {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 2px dashed rgba(17, 24, 39, 0.12);
+    text-align: center;
+}
+
+.preorder-share-lead {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-indigo-900);
+    line-height: 1.45;
+    margin: 0 0 0.75rem;
+}
+
+.btn-preorder-share {
+    width: 100%;
+    min-height: 3rem;
+    border-radius: 0.75rem;
+    border: 2px solid var(--color-black);
+    background: var(--color-white);
+    color: var(--color-indigo-900);
+    font-size: 1rem;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px 0px rgba(99, 102, 241, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.btn-preorder-share:hover {
+    background: var(--color-indigo-50);
+    transform: translateY(2px);
+    box-shadow: 2px 2px 0px 0px rgba(99, 102, 241, 0.35);
+}
+
+.btn-preorder-share:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+.preorder-share-toast {
+    margin: 0.625rem 0 0;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-indigo-700);
+    min-height: 1.25rem;
+}
+
+.preorder-share-toast[hidden] {
+    display: none !important;
+}
+
 .preorder-trust {
     margin-top: 0.5rem;
     font-size: 0.6875rem;

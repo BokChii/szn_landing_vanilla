@@ -203,7 +203,7 @@ function wirePreorderModals() {
 
         showResultModal(
             '알림 등록 완료',
-            '출시 소식은 이 메일로만 보내드릴게요. 기다려 주셔서 고마워요!',
+            '출시 소식은 이 메일로만 보내드릴게요. 아래 버튼으로 친구에게도 알려주세요!',
         );
         emailInput.value = '';
         clearEmailFieldError();
@@ -211,6 +211,10 @@ function wirePreorderModals() {
 
     btnResultOk.addEventListener('click', () => {
         if (resultDialog.open) resultDialog.close();
+        const shareBtn = document.getElementById('preorderShare');
+        if (shareBtn) {
+            shareBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     });
 
     submitBtn.addEventListener('click', () => {
@@ -233,6 +237,48 @@ function wirePreorderModals() {
         pendingEmail.value = email;
         confirmBody.textContent = `${email}\n\n출시·오픈 소식 알림만 보내드려요. 스팸은 보내지 않아요.`;
         if (!confirmDialog.open) confirmDialog.showModal();
+    });
+}
+
+function wirePreorderShare() {
+    const btn = document.getElementById('preorderShare');
+    const toast = document.getElementById('preorderShareToast');
+    if (!btn) return;
+
+    const showToast = (msg) => {
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.hidden = false;
+        window.clearTimeout(showToast._t);
+        showToast._t = window.setTimeout(() => {
+            toast.hidden = true;
+        }, 2500);
+    };
+
+    btn.addEventListener('click', async () => {
+        const url = `${window.location.origin}${window.location.pathname}?utm_source=share&utm_medium=referral&utm_campaign=landing_preorder`;
+        const text = `웹툰 퀴즈로 리워드 받는 앱 '스토릿' 출시 준비 중이야!\n사전 예약하고 같이 기다리자.\n${url}`;
+
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: '스토릿 사전 예약',
+                    text,
+                    url,
+                });
+                showToast('공유했어요!');
+                return;
+            } catch (e) {
+                if (e && e.name === 'AbortError') return;
+            }
+        }
+
+        try {
+            await navigator.clipboard.writeText(text);
+            showToast('링크를 복사했어요. 친구에게 붙여넣어 주세요!');
+        } catch {
+            showToast('복사에 실패했어요. 주소창 링크를 직접 공유해 주세요.');
+        }
     });
 }
 
@@ -262,6 +308,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     wirePreorderModals();
+    wirePreorderShare();
     wireLegalModals();
 
     const backToTop = document.getElementById('backToTop');
