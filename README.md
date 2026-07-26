@@ -107,6 +107,17 @@ from quiz_events
 where event = 'quiz_complete' and session_id is not null;
 ```
 
+### 공유 버튼 클릭 로그 (Supabase)
+
+사전등록 영역 `친구에게 링크 공유하기` 클릭은 `share_events`에 저장됩니다.
+
+1. SQL Editor에서 `supabase/share_events.sql` 실행
+2. 클릭 수:
+
+```sql
+select count(*) from share_events where source = 'preorder';
+```
+
 ### Notion 사전등록 연동 (등록마다 새 행 추가)
 
 사전 예약이 Supabase에 저장되면 Vercel API가 Notion DB에 **등록 1건당 새 행**을 추가합니다.
