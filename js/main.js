@@ -123,17 +123,29 @@ function wirePreorderModals() {
 
     const btnPreorderLabel = submitBtn.querySelector('.btn-preorder-label');
     const btnPreorderLoading = submitBtn.querySelector('.btn-preorder-loading');
+    let preorderInFlight = false;
 
     function setPreorderLoading(loading) {
         submitBtn.disabled = loading;
+        btnConfirm.disabled = loading;
+        btnCancel.disabled = loading;
         if (loading) {
             submitBtn.setAttribute('aria-busy', 'true');
+            btnConfirm.setAttribute('aria-busy', 'true');
         } else {
             submitBtn.removeAttribute('aria-busy');
+            btnConfirm.removeAttribute('aria-busy');
         }
         if (btnPreorderLabel) btnPreorderLabel.hidden = loading;
         if (btnPreorderLoading) btnPreorderLoading.hidden = !loading;
         submitBtn.classList.toggle('btn-preorder--busy', loading);
+    }
+
+    function isDuplicateEmailError(error) {
+        if (!error) return false;
+        if (error.code === '23505') return true;
+        const msg = String(error.message || '').toLowerCase();
+        return msg.includes('duplicate key') || msg.includes('already exists');
     }
 
     function clearEmailFieldError() {
@@ -157,12 +169,19 @@ function wirePreorderModals() {
     emailInput.addEventListener('change', clearEmailFieldError);
 
     btnCancel.addEventListener('click', () => {
+        if (preorderInFlight) return;
         if (confirmDialog.open) confirmDialog.close();
     });
 
     btnConfirm.addEventListener('click', async () => {
+        // Guard before any await — double-tap used to fire two inserts;
+        // the first succeeds and the second surfaces as "already registered".
+        if (preorderInFlight) return;
+        preorderInFlight = true;
+
         if (confirmDialog.open) confirmDialog.close();
         if (!supabase) {
+            preorderInFlight = false;
             showResultModal(
                 '연결을 확인해 주세요',
                 'Supabase 설정이 필요합니다. 배포 환경의 환경 변수와 빌드가 올바른지 확인해 주세요.',
@@ -177,8 +196,10 @@ function wirePreorderModals() {
         try {
             const result = await supabase.from(preorderTable).insert({ email });
             error = result.error;
-        } catch {
+        } catch (e) {
+            console.warn('[preorder] network/insert exception', e);
             setPreorderLoading(false);
+            preorderInFlight = false;
             showResultModal(
                 '연결 오류',
                 '네트워크를 확인한 뒤 다시 시도해 주세요.',
@@ -187,13 +208,24 @@ function wirePreorderModals() {
         }
 
         setPreorderLoading(false);
+        preorderInFlight = false;
 
         if (error) {
-            const code = error.code;
-            const msg = error.message || '';
-            if (code === '23505' || msg.toLowerCase().includes('duplicate') || msg.toLowerCase().includes('unique')) {
-                showEmailFieldError('이미 등록된 이메일이에요. 다른 주소로 시도해 주세요.');
-                emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            console.warn('[preorder] insert error', {
+                code: error.code,
+                message: error.message,
+                details: error.details,
+                hint: error.hint,
+                email,
+            });
+            if (isDuplicateEmailError(error)) {
+                // Soft-success: DB already has this address (retry / double submit).
+                showResultModal(
+                    '이미 알림 신청되어 있어요',
+                    '이 이메일로 출시 소식을 보내드릴게요.',
+                );
+                emailInput.value = '';
+                clearEmailFieldError();
             } else {
                 showResultModal(
                     '잠시 후 다시 시도해 주세요',
