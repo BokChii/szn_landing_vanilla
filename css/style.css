@@ -1960,14 +1960,16 @@ dialog.modal.modal--legal[open] {
 
 /* Webtoon personality quiz modal */
 dialog.modal.modal--quiz[open] {
+    /* Keep fixed — relative + top/left 50% can park the panel off-screen in some WebKits */
+    position: fixed;
     width: min(32rem, calc(100vw - 1.25rem));
     max-width: none;
     max-height: calc(100vh - 1rem);
+    max-height: calc(100dvh - 1rem);
     padding: 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
 .quiz-modal-close {
@@ -1993,9 +1995,10 @@ dialog.modal.modal--quiz[open] {
 }
 
 .quiz-modal-scroll {
-    flex: 1;
-    min-height: 0;
+    /* flex-basis auto avoids 0-height collapse when the dialog only has max-height */
+    flex: 1 1 auto;
     overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 3rem 1.25rem 1.5rem;
     -webkit-overflow-scrolling: touch;
 }
