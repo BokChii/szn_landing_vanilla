@@ -10,7 +10,13 @@ let shareLogTable = 'share_events';
 /** Anonymous id for one quiz attempt (open → complete/share). */
 let quizSessionId = '';
 
-const QUIZ_EVENTS = new Set(['quiz_open', 'quiz_start', 'quiz_complete', 'quiz_share']);
+const QUIZ_EVENTS = new Set([
+    'quiz_open',
+    'quiz_start',
+    'quiz_complete',
+    'quiz_share',
+    'quiz_card_save',
+]);
 const SHARE_EVENTS = new Set(['preorder_share']);
 
 /**

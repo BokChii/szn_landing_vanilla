@@ -1,6 +1,7 @@
 -- 성향 테스트 참여 로그 (Supabase SQL Editor에서 실행)
 -- 프론트(anon)는 INSERT만 가능. 조회는 Dashboard / service role로.
--- 이미 테이블을 만든 경우: quiz_events_add_session_id.sql 만 실행하세요.
+-- 이미 테이블을 만든 경우: quiz_events_add_session_id.sql,
+-- quiz_events_add_card_save.sql 만 실행하세요.
 
 create table if not exists public.quiz_events (
   id bigint generated always as identity primary key,
@@ -10,7 +11,7 @@ create table if not exists public.quiz_events (
   genre text,
   created_at timestamptz not null default now(),
   constraint quiz_events_event_check
-    check (event in ('quiz_open', 'quiz_start', 'quiz_complete', 'quiz_share'))
+    check (event in ('quiz_open', 'quiz_start', 'quiz_complete', 'quiz_share', 'quiz_card_save'))
 );
 
 create index if not exists quiz_events_created_at_idx

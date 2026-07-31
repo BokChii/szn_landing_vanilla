@@ -1,5 +1,6 @@
 import { beginQuizSession, trackEvent } from './analytics.js';
 import quizData from './quiz-data.js';
+import { renderResultCard } from './quiz-card.js';
 
 const TIE_ORDER = ['martial_arts', 'fantasy', 'thriller', 'action', 'romance', 'slice'];
 
@@ -39,6 +40,9 @@ let phase = 'intro';
 /** @type {Record<string, number>} */
 let scores = {};
 let resultKey = '';
+/** @type {HTMLElement | null} */
+let cardSheetEl = null;
+let cardObjectUrl = '';
 
 function emptyScores() {
     const o = {};
@@ -173,9 +177,9 @@ function render() {
                 </div>
                 <p class="quiz-toast" id="quizToast" role="status" aria-live="polite" hidden></p>
                 <div class="quiz-result-actions">
-                    <button type="button" class="btn-quiz-primary" id="quizBtnShare">결과 공유하기</button>
+                    <button type="button" class="btn-quiz-primary" id="quizBtnShare">결과 이미지로 공유하기</button>
+                    <button type="button" class="btn-quiz-cta" id="quizBtnPreorder">출시 알림 받기</button>
                     <button type="button" class="btn-quiz-secondary" id="quizBtnAgain">다시 하기</button>
-                    <button type="button" class="btn-quiz-ghost" id="quizBtnPreorder">출시 알림 받기</button>
                 </div>
             </div>
         `;
@@ -240,46 +244,180 @@ function render() {
     });
 }
 
-async function shareOutcome(r) {
-    trackEvent('quiz_share', { genre: resultKey });
-    const url = shareUrl();
-    const text = `【${r.title}】\n${r.sub_title}\n\n스토릿 웹툰 성향 테스트 해보기: ${url}`;
+let toastTimer = 0;
+
+function showToast(msg) {
     const toast = rootEl?.querySelector('#quizToast');
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.hidden = false;
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => {
+        toast.hidden = true;
+    }, 2500);
+}
 
-    const showToast = (msg) => {
-        if (!toast) return;
-        toast.textContent = msg;
-        toast.hidden = false;
-        window.clearTimeout(showToast._t);
-        showToast._t = window.setTimeout(() => {
-            toast.hidden = true;
-        }, 2500);
-    };
+function isMobileUa() {
+    if (navigator.userAgentData && typeof navigator.userAgentData.mobile === 'boolean') {
+        return navigator.userAgentData.mobile;
+    }
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+}
 
-    const isMobileUa =
-        navigator.userAgentData && typeof navigator.userAgentData.mobile === 'boolean'
-            ? navigator.userAgentData.mobile
-            : /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
-    const canNativeShare = typeof navigator.share === 'function' && isMobileUa;
+/** iOS Safari는 blob URL에 download 속성이 먹지 않아 별도 안내가 필요하다. */
+function isIos() {
+    const ua = navigator.userAgent || '';
+    return /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+}
 
-    if (canNativeShare) {
+function shareText(r) {
+    return `【${r.title}】\n${r.sub_title}\n\n스토릿 웹툰 성향 테스트 해보기: ${shareUrl()}`;
+}
+
+async function copyShareLink(r) {
+    try {
+        await navigator.clipboard.writeText(shareText(r));
+        showToast('링크랑 결과 문구 복사했어!');
+    } catch {
+        showToast('복사에 실패했어. 직접 길게 눌러 복사해 줘.');
+    }
+}
+
+/** 카드 생성이 실패했을 때 쓰는 기존 텍스트 공유. */
+async function shareResultText(r) {
+    const url = shareUrl();
+    if (typeof navigator.share === 'function' && isMobileUa()) {
         try {
-            await navigator.share({
-                title: '스토릿 웹툰 성향 테스트',
-                text,
-                url,
-            });
+            await navigator.share({ title: '스토릿 웹툰 성향 테스트', text: shareText(r), url });
             showToast('공유했어!');
             return;
         } catch (e) {
             if (e && e.name === 'AbortError') return;
         }
     }
+    await copyShareLink(r);
+}
+
+function closeCardSheet() {
+    if (!cardSheetEl) return;
+    cardSheetEl.remove();
+    cardSheetEl = null;
+    if (cardObjectUrl) {
+        URL.revokeObjectURL(cardObjectUrl);
+        cardObjectUrl = '';
+    }
+}
+
+/**
+ * 생성된 카드를 먼저 보여준 뒤, 시트 안의 새 탭으로 공유·저장을 확정한다.
+ * (생성 직후 바로 navigator.share를 부르면 iOS에서 사용자 제스처가 만료돼 실패한다.)
+ */
+function openCardSheet(r, card) {
+    closeCardSheet();
+    if (!dialogEl) return;
+
+    cardObjectUrl = card.url;
+    const fileName = `storit-webtoon-test-${resultKey}.png`;
+    const file = new File([card.blob], fileName, { type: 'image/png' });
+    const canShareFile =
+        isMobileUa() &&
+        typeof navigator.share === 'function' &&
+        typeof navigator.canShare === 'function' &&
+        navigator.canShare({ files: [file] });
+    const canDownload = !isIos();
+
+    const hint = canShareFile
+        ? '인스타 스토리, 카톡 어디든 바로 보낼 수 있어!'
+        : canDownload
+          ? '저장한 뒤 인스타 스토리에 올려 줘!'
+          : '이미지를 꾹 눌러 "사진에 추가"로 저장해 줘!';
+
+    const sheet = document.createElement('div');
+    sheet.className = 'quiz-card-sheet';
+    sheet.setAttribute('role', 'dialog');
+    sheet.setAttribute('aria-label', '결과 이미지 공유');
+    sheet.innerHTML = `
+        <div class="quiz-card-sheet-backdrop" data-close></div>
+        <div class="quiz-card-sheet-panel">
+            <p class="quiz-card-sheet-title">이 이미지로 공유할까?</p>
+            <img src="${card.url}" alt="성향 테스트 결과 카드" class="quiz-card-preview" width="${card.width}" height="${card.height}" />
+            <p class="quiz-card-sheet-hint">${escapeHtml(hint)}</p>
+            <div class="quiz-card-sheet-actions">
+                ${canShareFile ? '<button type="button" class="btn-quiz-primary" data-act="share">공유하기</button>' : ''}
+                ${!canShareFile && canDownload ? '<button type="button" class="btn-quiz-primary" data-act="download">이미지 저장</button>' : ''}
+                <button type="button" class="btn-quiz-secondary" data-act="copy">링크 복사</button>
+                <button type="button" class="btn-quiz-ghost" data-close>닫기</button>
+            </div>
+        </div>
+    `;
+
+    sheet.addEventListener('click', async (e) => {
+        const target = e.target instanceof Element ? e.target : null;
+        if (!target) return;
+
+        if (target.closest('[data-close]')) {
+            closeCardSheet();
+            return;
+        }
+
+        const act = target.closest('[data-act]')?.getAttribute('data-act');
+        if (act === 'share') {
+            try {
+                await navigator.share({ files: [file], title: '스토릿 웹툰 성향 테스트', text: shareText(r) });
+                trackEvent('quiz_card_save', { genre: resultKey });
+                closeCardSheet();
+                showToast('공유했어!');
+            } catch (err) {
+                if (err && err.name === 'AbortError') return;
+                showToast('공유에 실패했어. 저장해서 올려 줄래?');
+            }
+            return;
+        }
+
+        if (act === 'download') {
+            const a = document.createElement('a');
+            a.href = card.url;
+            a.download = fileName;
+            a.click();
+            trackEvent('quiz_card_save', { genre: resultKey });
+            showToast('이미지를 저장했어!');
+            return;
+        }
+
+        if (act === 'copy') {
+            await copyShareLink(r);
+        }
+    });
+
+    cardSheetEl = sheet;
+    dialogEl.appendChild(sheet);
+}
+
+async function shareOutcome(r) {
+    trackEvent('quiz_share', { genre: resultKey });
+
+    const btn = rootEl?.querySelector('#quizBtnShare');
+    const label = btn?.textContent || '';
+    if (btn) {
+        btn.disabled = true;
+        btn.textContent = '이미지 만드는 중...';
+    }
+
     try {
-        await navigator.clipboard.writeText(text);
-        showToast('링크랑 결과 문구 복사했어!');
-    } catch {
-        showToast('복사에 실패했어. 직접 길게 눌러 복사해 줘.');
+        const card = await renderResultCard({
+            genreLabel: GENRE_LABELS[resultKey] || resultKey,
+            mascotSrc: genreImageSrc(resultKey),
+            result: r,
+        });
+        openCardSheet(r, card);
+    } catch (e) {
+        console.warn('[quiz-card]', e);
+        await shareResultText(r);
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = label;
+        }
     }
 }
 
@@ -311,8 +449,15 @@ export function initQuiz(options = {}) {
     });
 
     dialogEl.addEventListener('close', () => {
+        closeCardSheet();
         scores = emptyScores();
         phase = 'intro';
+    });
+
+    dialogEl.addEventListener('cancel', (e) => {
+        if (!cardSheetEl) return;
+        e.preventDefault();
+        closeCardSheet();
     });
 
     dialogEl.addEventListener('click', (e) => {

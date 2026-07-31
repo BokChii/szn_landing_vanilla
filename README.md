@@ -20,6 +20,7 @@ vanilla/
 │   └── style.css       # 모든 스타일 (Tailwind 없이 순수 CSS)
 ├── js/
 │   ├── main.js         # 앱 로직 (ES module)
+│   ├── quiz-card.js    # 성향 테스트 결과 공유 카드(1080x1920) 캔버스 렌더러
 │   ├── config.example.js  # Supabase 설정 예시
 │   └── config.js     # 로컬 또는 빌드 생성 (git에 포함하지 않음)
 ├── assets/             # 이미지 파일들
@@ -96,8 +97,11 @@ vanilla/
 | `quiz_start` | 시작하기 |
 | `quiz_complete` | 결과 도달 + `genre` |
 | `quiz_share` | 공유 클릭 + `genre` |
+| `quiz_card_save` | 결과 카드 이미지 저장/공유 완료 + `genre` |
 
-이미 테이블이 있으면 `supabase/quiz_events_add_session_id.sql`만 실행하세요.
+이미 테이블이 있으면 `supabase/quiz_events_add_session_id.sql`,
+`supabase/quiz_events_add_card_save.sql`만 실행하세요.
+(`quiz_card_save`는 `event` CHECK 제약을 넓혀야 기록됩니다.)
 
 참여 수(완료 기준):
 
