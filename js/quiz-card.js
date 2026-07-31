@@ -14,15 +14,18 @@ const FRAME_RADIUS = 48;
 
 /** 인스타 UI(상단 프로필 / 하단 답장창)를 피하는 여백 */
 const SAFE_TOP = 150;
-const STRIP_TOP = 1582;
+const STRIP_TOP = 1600;
 const STRIP_H = 76;
 
-const PANEL_BOTTOM = 1542;
-const PANEL_H = 430;
+const PANEL_BOTTOM = 1500;
+const PANEL_H = 410;
 const PANEL_TOP = PANEL_BOTTOM - PANEL_H;
 const PANEL_W = 620;
 const PANEL_X = (CARD_W - PANEL_W) / 2;
 
+const BADGE_TOP = 336;
+const BADGE_H = 88;
+const MASCOT_TOP = BADGE_TOP + BADGE_H + 40;
 const MASCOT_SIZE = 400;
 
 const COLORS = {
@@ -243,26 +246,26 @@ function drawHeader(ctx, cookie) {
 }
 
 /** @param {CanvasRenderingContext2D} ctx */
-function drawBadge(ctx, label, top) {
-    const h = 88;
+function drawBadge(ctx, label) {
     ctx.font = font(900, 46);
     const w = Math.max(240, ctx.measureText(label).width + 96);
     const x = (CARD_W - w) / 2;
 
-    brutalBox(ctx, x, top, w, h, h / 2, COLORS.yellow, 10, 5);
+    brutalBox(ctx, x, BADGE_TOP, w, BADGE_H, BADGE_H / 2, COLORS.yellow, 10, 5);
 
     ctx.fillStyle = COLORS.black;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(label, CARD_W / 2, top + h / 2 + 3);
+    ctx.fillText(label, CARD_W / 2, BADGE_TOP + BADGE_H / 2 + 3);
 }
 
 /**
  * @param {CanvasRenderingContext2D} ctx
  * @param {HTMLImageElement | null} mascot
  */
-function drawMascot(ctx, mascot, top) {
+function drawMascot(ctx, mascot) {
     const x = (CARD_W - MASCOT_SIZE) / 2;
+    const top = MASCOT_TOP;
     brutalBox(ctx, x, top, MASCOT_SIZE, MASCOT_SIZE, 40, COLORS.white, 12, 5);
     if (!mascot) return;
 
@@ -283,12 +286,15 @@ function drawMascot(ctx, mascot, top) {
  * 마스코트와 능력치 패널 사이 남는 공간에 제목/부제를 세로 중앙 정렬한다.
  * @param {CanvasRenderingContext2D} ctx
  */
-function drawTitleBlock(ctx, result, zoneTop, zoneBottom) {
+function drawTitleBlock(ctx, result) {
+    const zoneTop = MASCOT_TOP + MASCOT_SIZE;
+    const zoneBottom = PANEL_TOP;
     // 본문보다 좁게 줄바꿈해 제목이 카드 폭에 꽉 차 보이지 않게 한다.
     const { size, lines } = fitTitle(ctx, result.title, CONTENT_W - 140);
     const lineHeight = size + 18;
     const subSize = 34;
     const subGap = 16;
+
     const blockH = lines.length * lineHeight + subGap + subSize;
     let y = zoneTop + (zoneBottom - zoneTop - blockH) / 2;
 
@@ -319,9 +325,12 @@ function drawStatsPanel(ctx, stats) {
     ctx.textBaseline = 'top';
     ctx.fillText('능력치 프로필', CARD_W / 2, PANEL_TOP + 26);
 
+    const chartTop = PANEL_TOP + 74;
+    const chartBottom = PANEL_BOTTOM - 28;
+    const labelGap = 38;
     const cx = CARD_W / 2;
-    const cy = 1345;
-    const rMax = 110;
+    const cy = (chartTop + chartBottom) / 2;
+    const rMax = (chartBottom - chartTop) / 2 - labelGap - 13;
     const n = STAT_ORDER.length;
     const values = STAT_ORDER.map(({ key }) => Math.min(100, Math.max(0, stats?.[key] ?? 0)));
 
@@ -359,7 +368,7 @@ function drawStatsPanel(ctx, stats) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     STAT_ORDER.forEach((s, i) => {
-        const [lx, ly] = pt(i, rMax + 38);
+        const [lx, ly] = pt(i, rMax + labelGap);
         ctx.fillText(s.label, lx, ly);
     });
 }
@@ -406,14 +415,9 @@ export async function renderResultCard({ genreLabel, mascotSrc, result }) {
 
     drawBackground(ctx);
     drawHeader(ctx, cookie);
-
-    const badgeTop = 336;
-    drawBadge(ctx, genreLabel, badgeTop);
-
-    const mascotTop = badgeTop + 88 + 40;
-    drawMascot(ctx, mascot, mascotTop);
-
-    drawTitleBlock(ctx, result, mascotTop + MASCOT_SIZE, PANEL_TOP);
+    drawBadge(ctx, genreLabel);
+    drawMascot(ctx, mascot);
+    drawTitleBlock(ctx, result);
     drawStatsPanel(ctx, result.stats);
     drawLinkStrip(ctx, window.location.host || 'storit-landing.vercel.app');
 
