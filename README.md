@@ -8,9 +8,10 @@
 vanilla/
 ├── index.html          # 메인 HTML 파일
 ├── package.json        # Vercel 빌드: npm run build → js/config.js 생성
-├── vercel.json         # buildCommand / outputDirectory
+├── vercel.json         # buildCommand / outputDirectory / assets 캐시 헤더
 ├── scripts/
-│   └── write-supabase-config.mjs  # 환경 변수 → js/config.js
+│   ├── write-supabase-config.mjs  # 환경 변수 → js/config.js
+│   └── optimize-images.mjs        # assets 이미지 리사이즈 + WebP 변환 (수동 실행)
 ├── api/
 │   └── sync-notion.mjs     # Supabase Webhook → Notion 사전등록 행 추가
 ├── supabase/
@@ -23,14 +24,30 @@ vanilla/
 │   ├── quiz-card.js    # 성향 테스트 결과 공유 카드(1080x1920) 캔버스 렌더러
 │   ├── config.example.js  # Supabase 설정 예시
 │   └── config.js     # 로컬 또는 빌드 생성 (git에 포함하지 않음)
-├── assets/             # 이미지 파일들
+├── assets/             # 이미지 파일들 (WebP, og/파비콘만 PNG)
 │   ├── storit_logo.png
-│   ├── main.png
-│   ├── quiz.png
-│   ├── rank.png
-│   └── shop.png
+│   ├── og.png
+│   ├── q1~q6.webp      # 성향 테스트 문항 일러스트
+│   ├── romance.webp 등  # 결과 마스코트
+│   └── main/quiz/rank/shop.webp
 └── README.md
 ```
+
+## 이미지 에셋 규칙
+
+`assets/`의 이미지는 표시 크기에 맞춰 줄인 WebP로 관리합니다. 원본 PNG를
+그대로 올리면 안 됩니다. (문항 일러스트는 288x176 박스에 그려지는데 예전에
+1984x2150 PNG를 그대로 받느라 문항마다 6MB씩 내려받았습니다.)
+
+에셋을 추가하거나 교체했다면 `scripts/optimize-images.mjs`의 목록에 넣고
+한 번 돌린 뒤, 생성된 `.webp`를 커밋합니다.
+
+```bash
+npm install --no-save sharp
+node scripts/optimize-images.mjs
+```
+
+`og.png`(카카오 등 스크래퍼 호환)와 `storit_logo.png`(파비콘)는 PNG로 둡니다.
 
 ## 사용 방법
 

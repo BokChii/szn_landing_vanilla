@@ -14,12 +14,12 @@ const GENRE_LABELS = {
 };
 
 const GENRE_IMAGES = {
-    romance: 'assets/romance.png',
-    fantasy: 'assets/fantasy.png',
-    action: 'assets/action.png',
-    thriller: 'assets/thriller.png',
-    slice: 'assets/slice.png',
-    martial_arts: 'assets/muhyeop.png',
+    romance: 'assets/romance.webp',
+    fantasy: 'assets/fantasy.webp',
+    action: 'assets/action.webp',
+    thriller: 'assets/thriller.webp',
+    slice: 'assets/slice.webp',
+    martial_arts: 'assets/muhyeop.webp',
 };
 
 const STAT_ORDER = [
@@ -67,7 +67,7 @@ function pickWinner() {
 }
 
 function genreImageSrc(key) {
-    return GENRE_IMAGES[key] || 'assets/mascot.png';
+    return GENRE_IMAGES[key] || 'assets/mascot.webp';
 }
 
 function shareUrl() {
@@ -120,8 +120,30 @@ function escapeHtml(s) {
 /** 문항별 일러스트 (q1~q6) */
 function questionImageSrc(questionIndex) {
     const n = questionIndex + 1;
-    if (n >= 1 && n <= 6) return `assets/q${n}.png`;
-    return 'assets/q6.png';
+    if (n >= 1 && n <= 6) return `assets/q${n}.webp`;
+    return 'assets/q6.webp';
+}
+
+const preloadedImages = new Set();
+
+/** 문항은 순서대로 나오므로 다음 장을 미리 받아 대기 시간을 없앤다. */
+function preloadImage(src) {
+    if (!src || preloadedImages.has(src)) return;
+    preloadedImages.add(src);
+    const img = new Image();
+    img.decoding = 'async';
+    img.src = src;
+}
+
+function preloadQuestionImage(questionIndex) {
+    if (questionIndex < 0 || questionIndex >= quizData.questions.length) return;
+    preloadImage(questionImageSrc(questionIndex));
+}
+
+/** 마지막 문항에서 호출. 결과 화면과 공유 카드가 같은 파일을 쓴다. */
+function preloadResultImages() {
+    for (const src of Object.values(GENRE_IMAGES)) preloadImage(src);
+    preloadImage('assets/logo_cookie.webp');
 }
 
 function render() {
@@ -141,6 +163,7 @@ function render() {
                 <button type="button" class="btn-quiz-primary" id="quizBtnStart">시작하기</button>
             </div>
         `;
+        preloadQuestionImage(0);
         rootEl.querySelector('#quizBtnStart')?.addEventListener('click', () => {
             trackEvent('quiz_start');
             scores = emptyScores();
@@ -210,7 +233,7 @@ function render() {
             <p class="quiz-q-index">${qi + 1} / ${total}</p>
             <h2 class="quiz-q-text">${escapeHtml(q.text)}</h2>
             <div class="quiz-q-figure" aria-hidden="true">
-                <img src="${questionImageSrc(qi)}" alt="" class="quiz-q-img" width="320" height="200" loading="lazy" decoding="async" />
+                <img src="${questionImageSrc(qi)}" alt="" class="quiz-q-img" width="320" height="200" loading="eager" fetchpriority="high" decoding="async" />
             </div>
             <div class="quiz-options" role="group" aria-label="선택지">
                 ${q.options
@@ -223,6 +246,9 @@ function render() {
             </div>
         </div>
     `;
+
+    if (qi + 1 < total) preloadQuestionImage(qi + 1);
+    else preloadResultImages();
 
     rootEl.querySelectorAll('.quiz-option').forEach((btn) => {
         btn.addEventListener('click', () => {

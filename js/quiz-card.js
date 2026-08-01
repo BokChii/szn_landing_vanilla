@@ -402,7 +402,7 @@ function drawLinkStrip(ctx, domain) {
  */
 export async function renderResultCard({ genreLabel, mascotSrc, result }) {
     const [cookie, mascot] = await Promise.all([
-        loadImage('assets/logo_cookie.png').catch(() => null),
+        loadImage('assets/logo_cookie.webp').catch(() => null),
         loadImage(mascotSrc).catch(() => null),
         ensureFonts(),
     ]);
