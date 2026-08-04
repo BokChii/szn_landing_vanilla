@@ -55,17 +55,88 @@ function toggleMenu() {
     }
 }
 
-function scrollToSection(sectionId) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-        const headerHeight = 80;
-        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = elementPosition - headerHeight;
+/** 고정 헤더 아래 카드가 가리지 않도록 쓰는 여백(px). */
+const SCROLL_GAP = 12;
 
+function getHeaderHeight() {
+    if (!header) return 68;
+    return Math.ceil(header.getBoundingClientRect().height);
+}
+
+/**
+ * 요소를 'start'(헤더 바로 아래) 또는 'center'(화면 세로 중앙)에 맞출 scrollY.
+ * center일 때 카드 전체가 보이도록 위·아래를 클램프한다.
+ * @param {HTMLElement} element
+ * @param {'start' | 'center'} [align]
+ */
+function targetScrollTop(element, align = 'start') {
+    const rect = element.getBoundingClientRect();
+    const elementTop = rect.top + window.pageYOffset;
+    const elementHeight = rect.height;
+    const headerH = getHeaderHeight();
+    const vh = window.innerHeight;
+    const maxScroll = Math.max(0, document.documentElement.scrollHeight - vh);
+
+    let top;
+    if (align === 'center') {
+        // 카드 중앙 = 뷰포트 세로 중앙
+        top = elementTop + elementHeight / 2 - vh / 2;
+        // 위: 카드 상단이 헤더 아래로
+        const yMax = elementTop - headerH - SCROLL_GAP;
+        // 아래: 카드 하단이 뷰포트 안에
+        const yMin = elementTop + elementHeight - vh;
+        if (Number.isFinite(yMin) && Number.isFinite(yMax) && yMin <= yMax) {
+            top = Math.min(Math.max(top, yMin), yMax);
+        } else {
+            // 카드가 뷰보다 크면 상단 정렬
+            top = yMax;
+        }
+    } else {
+        top = elementTop - headerH - SCROLL_GAP;
+    }
+
+    return Math.max(0, Math.min(maxScroll, Math.round(top)));
+}
+
+/**
+ * 섹션으로 스크롤. 사전등록(#preorder)은 이메일 카드가 화면 중앙에 오도록 맞춘다.
+ * smooth 직후 한 번 더 보정해서 모달 닫힘·header.scrolled 전환 어긋남을 줄인다.
+ * @param {string} sectionId
+ * @param {{ behavior?: ScrollBehavior, align?: 'start' | 'center' }} [options]
+ */
+function scrollToSection(sectionId, options = {}) {
+    const element = document.getElementById(sectionId);
+    if (!element) {
+        if (isMenuOpen) toggleMenu();
+        return;
+    }
+
+    const behavior = options.behavior || 'smooth';
+    // 사전등록 카드는 가운데, 그 외 메뉴 섹션은 상단 정렬
+    const align = options.align || (sectionId === 'preorder' ? 'center' : 'start');
+
+    const apply = (scrollBehavior) => {
         window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
+            top: targetScrollTop(element, align),
+            behavior: scrollBehavior,
         });
+    };
+
+    apply(behavior);
+
+    if (behavior === 'smooth') {
+        const correct = () => {
+            const desired = targetScrollTop(element, align);
+            if (Math.abs(window.pageYOffset - desired) > 2) {
+                window.scrollTo({ top: desired, behavior: 'auto' });
+            }
+        };
+        // scrollend 가 중간에 뜨는 경우를 대비해 최종 안착을 한 번 더 보정한다.
+        if ('onscrollend' in window) {
+            window.addEventListener('scrollend', correct, { once: true });
+        }
+        window.setTimeout(correct, 450);
+        window.setTimeout(correct, 850);
     }
 
     if (isMenuOpen) {

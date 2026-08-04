@@ -214,8 +214,23 @@ function render() {
             render();
         });
         rootEl.querySelector('#quizBtnPreorder')?.addEventListener('click', () => {
-            if (dialogEl?.open) dialogEl.close();
-            window.scrollToSection?.('preorder');
+            let done = false;
+            const goPreorder = () => {
+                if (done) return;
+                done = true;
+                // dialog 레이아웃/스크롤 복원이 끝난 뒤 카드 중앙으로 이동
+                window.setTimeout(() => window.scrollToSection?.('preorder'), 50);
+            };
+
+            if (!dialogEl?.open) {
+                goPreorder();
+                return;
+            }
+
+            dialogEl.addEventListener('close', goPreorder, { once: true });
+            dialogEl.close();
+            // close 이벤트가 누락되는 환경 대비 폴백
+            window.setTimeout(goPreorder, 120);
         });
         return;
     }

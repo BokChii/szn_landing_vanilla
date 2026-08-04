@@ -1387,6 +1387,8 @@ body {
     max-width: 24rem;
     margin: 0 auto 2rem;
     text-align: left;
+    /* fixed 헤더(+여백)를 위한 안전 여유. JS 스크롤이 getHeaderOffset()과 맞춘다. */
+    scroll-margin-top: 5.25rem;
 }
 
 .preorder-card {
